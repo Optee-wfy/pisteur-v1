@@ -1,1 +1,0 @@
-ALTER TABLE "batiments" ADD COLUMN "url_vue_rue" text;

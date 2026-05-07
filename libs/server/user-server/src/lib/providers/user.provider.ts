@@ -2,7 +2,7 @@ import { ClientRepository } from "@optee/client-server";
 import { UserType } from "@optee/constants";
 import { ContactRepository } from "@optee/contact-server";
 import type { MailTemplateId } from "@optee/mailersend-server";
-import type { ContactHsId, ContactUuid, UserUuid } from "@optee/models";
+import type { ContactUuid, UserUuid } from "@optee/models";
 import { ProRepository } from "@optee/pro-server";
 import { AuthProvider } from "@optee/supabase-server";
 import { generateFakeUUID, isEmailFromOptee } from "@optee/utils";
@@ -10,7 +10,6 @@ import { generateFakeUUID, isEmailFromOptee } from "@optee/utils";
 export const UserProvider = {
   async createUserAccount({
     email,
-    contactHsId,
     contactUuid,
     sendInvitation = true,
     OTP,
@@ -20,7 +19,6 @@ export const UserProvider = {
     userType = UserType.CLIENT, // Default to CLIENT if not specified
   }: {
     email: string;
-    contactHsId?: ContactHsId;
     contactUuid?: ContactUuid;
     sendInvitation?: boolean;
     OTP?: string;
@@ -29,14 +27,8 @@ export const UserProvider = {
     partner?: string | null;
     userType?: UserType;
   }) {
-    if (!contactHsId && !contactUuid) {
-      throw Error(`Le paramètre contactHsId ou contactUuid est manquant.`);
-    }
-
-    if (contactHsId && contactUuid) {
-      throw Error(
-        `Les paramètres contactHsId et contactUuid sont mutuellement exclusifs.`,
-      );
+    if (!contactUuid) {
+      throw Error(`Le paramètre contactUuid est manquant.`);
     }
 
     const { user, session } = await AuthProvider.createUser({
@@ -47,10 +39,6 @@ export const UserProvider = {
 
     if (contactUuid) {
       await ContactRepository.setUserRelation(contactUuid, user.id);
-    }
-
-    if (contactHsId) {
-      await ContactRepository.setUserRelationFromHubspot(contactHsId, user.id);
     }
 
     const contact = await ContactRepository.getByUser(user.id);

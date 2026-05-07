@@ -6,7 +6,6 @@ import {
 } from "@optee/constants";
 import { ContactRepository } from "@optee/contact-server";
 import { FileProvider } from "@optee/file-server";
-import { HubspotProvider } from "@optee/hubspot-server";
 import {
   AttachmentHsId,
   hsLocationsTable,
@@ -80,7 +79,7 @@ export const quotesRouter = router({
         });
       }
 
-      return HubspotProvider.getFileUrl(input.hsId);
+      return null;
     }),
 
   getSignatureLink: clientProcedure(["QUOTE_SIGN"])

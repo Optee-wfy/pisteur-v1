@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 import { toObservable } from "@angular/core/rxjs-interop";
 import { FormsModule } from "@angular/forms";
-import { buildAssetUrl, HUBSPOT_OPERATIONS_URL } from "@optee/constants";
+import { buildAssetUrl } from "@optee/constants";
 import { IconCalendarComponent } from "@optee/icons";
 import { Location, Operation } from "@optee/models";
 import { ButtonComponent } from "@optee/ui/components/atoms/button/button/button.component";
@@ -131,17 +131,6 @@ type OperationHydrated = Awaited<
                   <span class="text-xs text-gray-600">Nom de l'opération</span>
                   <span class="text-primary-900 text-sm font-medium">
                     {{ operation.prestationId }}
-                  </span>
-                </div>
-                <div class="flex items-center justify-between gap-1">
-                  <span class="text-xs text-gray-600">Lien vers Hubspot</span>
-                  <span class="text-primary-900 text-sm font-medium">
-                    <a
-                      class="text-primary-700 underline"
-                      [href]="HUBSPOT_OPERATIONS_URL + operation.id"
-                    >
-                      [{{ operation.uuid }}]
-                    </a>
                   </span>
                 </div>
                 <div class="flex items-center justify-between gap-1">
@@ -431,7 +420,6 @@ export class PdfGeneratorComponent {
     };
   });
 
-  protected readonly HUBSPOT_OPERATIONS_URL = HUBSPOT_OPERATIONS_URL;
   protected readonly today = new Date();
   protected readonly selectedDate = model<Date | null>(this.today);
 

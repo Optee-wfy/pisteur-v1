@@ -1,1 +1,0 @@
-ALTER TYPE "hs_pipeline_contact_stage_enum" ADD VALUE '2060167406';

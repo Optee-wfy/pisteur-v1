@@ -1,1 +1,0 @@
-ALTER TABLE "enrichissements" ADD COLUMN "commence_le" timestamp;

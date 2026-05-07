@@ -1,2 +1,0 @@
-ALTER TABLE "contact_externe" ADD COLUMN "mail_indisponible_pour_fullenrich" boolean DEFAULT false;--> statement-breakpoint
-ALTER TABLE "contact_externe" ADD COLUMN "telephone_indisponible_pour_fullenrich" boolean DEFAULT false;

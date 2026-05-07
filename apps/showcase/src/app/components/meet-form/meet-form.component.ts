@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 import { CircleComponent } from "@optee/ui/components/atoms/circle/circle.component";
 import { EveComponent } from "@optee/ui/components/organisms/eve/eve.component";
-import { FormHubspotComponent } from "../form-hubspot/form-hubspot.component";
 
 @Component({
   selector: "swc-meet-form",
@@ -22,11 +21,10 @@ import { FormHubspotComponent } from "../form-hubspot/form-hubspot.component";
           Prenez contact avec l’un de nos energy managers pour accéder
           gratuitement à notre plateforme.
         </p>
-        <swc-form-hubspot [type]="formType()" />
       </div>
     </oui-eve>
   `,
-  imports: [FormHubspotComponent, EveComponent, CircleComponent],
+  imports: [EveComponent, CircleComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetFormComponent {

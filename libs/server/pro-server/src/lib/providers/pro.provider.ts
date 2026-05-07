@@ -34,10 +34,6 @@ import { ExternalContactRepository } from "@optee/external-contact-server";
 import { FileProvider } from "@optee/file-server";
 import { GooglePlacesProvider } from "@optee/google-places-server";
 import {
-  HubspotProvider,
-  isHubspotCompatibleEnvironment,
-} from "@optee/hubspot-server";
-import {
   LegalEntityProvider,
   LegalEntityRepository,
 } from "@optee/legal-entity-server";
@@ -718,16 +714,6 @@ export const ProProvider = {
       .filter(isNotNullish);
   },
 
-  async getHubspotPrestations() {
-    const hsPrestations = await HubspotProvider.getPropertyInfos(
-      "pros",
-      "offres",
-    );
-    return hsPrestations.options.map(
-      (o) => o.value as OperationHubspotPrestationId,
-    );
-  },
-
   getEmailTemplateDependingOnStatus(status: ProStatus | null): MailTemplateId {
     return ["Actif", "Inactif"].find((s) => s === status)
       ? "INVITE_ACTIF_INACTIF_PRO_CONTACT"
@@ -856,25 +842,8 @@ export const ProProvider = {
     await ProProvider.attachDocument(proUuid, file);
   },
 
-  async attachDocument(proUuid: ProUuid, document: LabelledFileDto) {
-    const blob = FileProvider.base64ToBlob({
-      base64Data: document.file.data,
-      contentType: document.file.type,
-    });
-
-    if (!blob) {
-      throw new Error("Impossible de transférer le fichier.");
-    }
-
-    const noteUuid = await HubspotProvider.uploadFile({
-      file: blob,
-      folderPath: "professionnels-documents",
-      fileName: document.file.name,
-    });
-
-    if (noteUuid) {
-      await ProRepository.associateToNote({ proUuid, noteUuid });
-    }
+  async attachDocument(_proUuid: ProUuid, _document: LabelledFileDto) {
+    // File upload to external storage removed (HubSpot deprecated)
   },
 
   async updateStatus(proUuid: ProUuid, status: ProStatus) {
@@ -1093,21 +1062,6 @@ export const ProProvider = {
     });
 
     const contract = getContractFromType(contractType, !!pro?.eligibilityCee);
-
-    if (isHubspotCompatibleEnvironment) {
-      const noteUuid = await HubspotProvider.uploadFile({
-        file: blob,
-        folderPath: "professionnels-contracts",
-        fileName: contract?.documentName + ".pdf",
-      });
-
-      if (!noteUuid) {
-        throw new Error(
-          "Une erreur est survenue lors de l'upload du document.",
-        );
-      }
-      await ProRepository.associateToNote({ proUuid: pro.uuid, noteUuid });
-    }
 
     const today = new Date().toISOString();
 

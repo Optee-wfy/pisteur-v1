@@ -61,9 +61,6 @@
       "@optee/fullenrich-server": [
         "libs/server/third-party/fullenrich-server/src/index.ts"
       ],
-      "@optee/hubspot-server": [
-        "libs/server/third-party/hubspot-server/src/index.ts"
-      ],
       "@optee/stripe-server": [
         "libs/server/stripe-server/src/index.ts"
       ],

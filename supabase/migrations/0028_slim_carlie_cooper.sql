@@ -1,1 +1,0 @@
-ALTER TABLE "batiments" ALTER COLUMN "ville" SET NOT NULL;

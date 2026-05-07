@@ -1,1 +1,0 @@
-ALTER TYPE "origine_inscription_plateforme_contact_enum" ADD VALUE 'Invitation par un Admin Pro';

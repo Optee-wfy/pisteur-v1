@@ -4,7 +4,6 @@ import type {
   ContactHsId,
   ContactUuid,
   HubspotContact,
-  HubspotNewContact,
   LocationUuid,
   ProUuid,
   UserUuid,
@@ -29,7 +28,7 @@ type DbExecutor = typeof db | DbTransaction;
 export const ContactRepository = {
   //@todo add UNIQUE constraint on email (update schema, Normalize email to lower-case before insert ? use OnConflict)
   async create(
-    input: HubspotNewContact & { email: string },
+    input: { email: string; [key: string]: unknown },
     options?: { tx?: DbTransaction },
   ) {
     const executor: DbExecutor = options?.tx ?? db;
@@ -267,7 +266,7 @@ export const ContactRepository = {
         | "lastSignInAt"
         | "invitedAt"
       >
-    >,
+    > & { [key: string]: unknown },
   ) {
     const [updatedContactData] = await db
       .update(hsContactsTable)

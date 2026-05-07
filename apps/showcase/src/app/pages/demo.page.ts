@@ -3,7 +3,6 @@ import { RouterModule } from "@angular/router";
 import { buildAssetUrl } from "@optee/constants";
 import { CircleComponent } from "@optee/ui/components/atoms/circle/circle.component";
 import { EveComponent } from "@optee/ui/components/organisms/eve/eve.component";
-import { FormHubspotComponent } from "../components/form-hubspot/form-hubspot.component";
 
 @Component({
   selector: "swc-demo-page",
@@ -48,12 +47,12 @@ import { FormHubspotComponent } from "../components/form-hubspot/form-hubspot.co
         <div class="flex size-16 gap-4 grayscale">
           <img
             class="inline-block rounded-full"
-            alt="Photo d'Antoine"
+            alt="Photo d’Antoine"
             [src]="antoineJpg"
           />
           <img
             class="inline-block rounded-full"
-            alt="Photo d'Alexia"
+            alt="Photo d’Alexia"
             [src]="alexiaJpg"
           />
           <img
@@ -76,11 +75,10 @@ import { FormHubspotComponent } from "../components/form-hubspot/form-hubspot.co
       </div>
 
       <oui-eve class="relative max-w-[1000px] flex-auto p-4 lg:p-10">
-        <swc-form-hubspot />
       </oui-eve>
     </div>
   `,
-  imports: [FormHubspotComponent, CircleComponent, RouterModule, EveComponent],
+  imports: [CircleComponent, RouterModule, EveComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DemoPageComponent {

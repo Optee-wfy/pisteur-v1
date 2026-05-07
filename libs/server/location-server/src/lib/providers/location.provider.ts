@@ -13,7 +13,6 @@ import { ContactClientRepository } from "@optee/contact-client-server";
 import { ContactLocationRepository } from "@optee/contact-location-server";
 import { FileProvider } from "@optee/file-server";
 import { GooglePlacesProvider } from "@optee/google-places-server";
-import { HubspotProvider } from "@optee/hubspot-server";
 import { LocationClientRepository } from "@optee/location-client-server";
 import type {
   ClientUuid,
@@ -21,12 +20,11 @@ import type {
   HubspotContact,
   HubspotLocationBdnbData,
   LocationUuid,
-  NoteUuid,
   UserUuid,
 } from "@optee/models";
 import { Location } from "@optee/models";
 import { StorageProvider } from "@optee/supabase-server";
-import { getFile, isEmailFromOptee, isNotNullish } from "@optee/utils";
+import { isEmailFromOptee, isNotNullish } from "@optee/utils";
 import { LocationRepository } from "../repositories/location.repository";
 
 export const LocationProvider = {
@@ -289,49 +287,6 @@ export const LocationProvider = {
       formattedData,
       updatedLocation: row,
     };
-  },
-
-  async uploadToHubspot({
-    uuid,
-    filesUrls,
-    storageFolder,
-  }: {
-    uuid: LocationUuid;
-    filesUrls: string[];
-    storageFolder: string;
-  }) {
-    // @todo Collision de nom de fichier et mauvaise extension lors des uploads should add unique id to filename
-    try {
-      const results = await Promise.allSettled(
-        filesUrls.map(async (fileUrl) => {
-          const file = await getFile(fileUrl);
-          return HubspotProvider.uploadFile({
-            file,
-            folderPath: storageFolder,
-            fileName: `document_du_bâtiment_${uuid}.pdf`,
-          });
-        }),
-      );
-
-      const okNoteUuids = results
-        .filter(
-          (r): r is PromiseFulfilledResult<NoteUuid | null> =>
-            r.status === "fulfilled",
-        )
-        .map((r) => r.value)
-        .filter(isNotNullish);
-
-      await Promise.all(
-        okNoteUuids.map((noteUuid) =>
-          LocationRepository.associateToNote({ locationUuid: uuid, noteUuid }),
-        ),
-      );
-
-      return okNoteUuids.length;
-    } catch (error) {
-      console.error("🚩 Upload des fichiers vers Hubspot:", error);
-      throw error;
-    }
   },
 
   async throwErrorIfUserIsNotAssociatedToLocation({

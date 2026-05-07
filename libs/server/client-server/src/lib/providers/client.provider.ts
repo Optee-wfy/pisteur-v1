@@ -21,7 +21,6 @@ import {
   ContactLocationRepository,
 } from "@optee/contact-location-server";
 import { ContactRepository, type GroupedContact } from "@optee/contact-server";
-import { HubspotProvider } from "@optee/hubspot-server";
 import { LocationProvider } from "@optee/location-server";
 import type {
   ClientUuid,
@@ -290,23 +289,6 @@ export const ClientProvider = {
         contactUuid: contact.uuid,
         ...dto.location,
       });
-    }
-
-    if (contact.email) {
-      try {
-        await HubspotProvider.trackEvent({
-          email: contact.email,
-          eventId: "location_add",
-          properties: {
-            source: "Onboarding",
-          },
-        });
-      } catch (error) {
-        console.error("🚩 Error tracking Hubspot onboard event: ", {
-          input: contact.email,
-          error,
-        });
-      }
     }
 
     return "success" as const;

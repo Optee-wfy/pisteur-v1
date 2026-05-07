@@ -27,8 +27,6 @@ import {
   ContactOperationRepository,
 } from "@optee/contact-operation-server";
 import { ContactRepository } from "@optee/contact-server";
-import { FileProvider } from "@optee/file-server";
-import { HubspotProvider } from "@optee/hubspot-server";
 import { LocationRepository } from "@optee/location-server";
 import { MailersendProvider } from "@optee/mailersend-server";
 import type {
@@ -355,18 +353,6 @@ export const OperationProvider = {
       annualElectricityConsumptionBefore: location.annualElectricityConsumption,
       greenhouseGasEmissionsBefore: location.annualGhg,
     };
-  },
-
-  async getHubspotOperationTypes() {
-    const hsPrestationData = await HubspotProvider.getPropertyInfos(
-      "deals",
-      "prestations",
-    );
-    const options = hsPrestationData?.options ?? [];
-    if (options.length === 0) {
-      console.warn("[HubSpot] Aucune option de prestation trouvée.");
-    }
-    return options.map((o) => o.value);
   },
 
   async getSignatoryContact(operationUuid: OperationUuid) {
@@ -957,24 +943,7 @@ export const OperationProvider = {
     );
   },
 
-  async attachDocument(operationUuid: OperationUuid, document: FileDto) {
-    const blob = FileProvider.base64ToBlob({
-      base64Data: document.data,
-      contentType: document.type,
-    });
-
-    if (!blob) {
-      throw new Error("Impossible de transférer le fichier.");
-    }
-
-    const noteUuid = await HubspotProvider.uploadFile({
-      file: blob,
-      folderPath: "operations-documents",
-      fileName: document.name,
-    });
-
-    if (noteUuid) {
-      await OperationRepository.associateToNote({ operationUuid, noteUuid });
-    }
+  async attachDocument(_operationUuid: OperationUuid, _document: FileDto) {
+    // File upload to external storage removed (HubSpot deprecated)
   },
 };

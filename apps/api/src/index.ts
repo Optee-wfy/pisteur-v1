@@ -48,7 +48,7 @@ app.use(
   cors({
     origin:
       process.env["VITE_ENV"] === "production"
-        ? ["https://app.optee.io", "https://app-eu1.hubspot.com"]
+        ? ["https://app.optee.io"]
         : true,
     credentials: true,
   }),

@@ -6,7 +6,7 @@ import {
   input,
   output,
 } from "@angular/core";
-import { HS_QUOTES_BASE_URL, UserType } from "@optee/constants";
+import { UserType } from "@optee/constants";
 import { DialogService } from "@optee/dialog";
 import { IconEyeComponent, IconEyeSlashComponent } from "@optee/icons";
 import { ButtonComponent } from "@optee/ui/components/atoms/button/button/button.component";
@@ -25,7 +25,7 @@ import type { AdminQuote } from "./quotes-list-admin.component";
         class="text-primary-700 underline"
         rel="noopener"
         target="_blank"
-        [href]="hsQuoteUrl + quote().id"
+        [href]="quote().id"
       >
         {{ quote().name }}
       </a>
@@ -84,7 +84,6 @@ export class QuoteRowComponent {
   private readonly fileService = inject(FileService);
   private readonly dialogService = inject(DialogService);
 
-  protected readonly hsQuoteUrl = HS_QUOTES_BASE_URL;
 
   async validateQuote() {
     const dialog = await this.dialogService.open(

@@ -1,1 +1,0 @@
-ALTER TABLE "personne_morale" ADD COLUMN "url_vue_rue_syndic" text;

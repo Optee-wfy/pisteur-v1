@@ -1,1 +1,0 @@
-ALTER TABLE "devis" ADD COLUMN "signature_location" jsonb;

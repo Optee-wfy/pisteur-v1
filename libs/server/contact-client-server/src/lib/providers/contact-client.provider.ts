@@ -2,7 +2,6 @@ import {
   CONTACT_CLIENT_ASSOCIATIONS,
   type ContactClientLabel,
 } from "@optee/constants";
-import { HubspotProvider } from "@optee/hubspot-server";
 import {
   type ClientHsId,
   type ClientUuid,
@@ -34,51 +33,22 @@ export const ContactClientProvider = {
           clientHsId: ClientHsId;
         },
   ) {
-    // Depending on the sync state (and the fact that our schedule jobs has properly or not updated ids) we can't know if we have to delete by uuid or hsId
     if ("contactUuid" in data) {
       const { contactUuid, clientUuid } = data;
 
-      const res = await ContactClientRepository.delete({
+      await ContactClientRepository.delete({
         contactUuid,
         clientUuid,
       });
-
-      const uniqueHsPairs = Array.from(
-        new Map(
-          res
-            .filter((r) => r.contactId && r.clientId)
-            .map((r) => [
-              `${r.contactId}::${r.clientId}`,
-              r.contactId && r.clientId
-                ? { contactId: r.contactId, clientId: r.clientId }
-                : null,
-            ]),
-        ).values(),
-      ).filter(isNotNullish);
-
-      await Promise.all(
-        uniqueHsPairs.map(({ contactId, clientId }) =>
-          HubspotProvider.deleteContactAssociationWithClient(
-            contactId,
-            clientId,
-          ),
-        ),
-      );
     }
 
     if ("contactHsId" in data) {
       const { contactHsId, clientHsId } = data;
 
-      await Promise.all([
-        ContactClientRepository.delete({
-          contactHsId,
-          clientHsId,
-        }),
-        HubspotProvider.deleteContactAssociationWithClient(
-          contactHsId,
-          clientHsId,
-        ),
-      ]);
+      await ContactClientRepository.delete({
+        contactHsId,
+        clientHsId,
+      });
     }
   },
 

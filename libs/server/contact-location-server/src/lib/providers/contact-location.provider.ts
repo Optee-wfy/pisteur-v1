@@ -1,5 +1,4 @@
 import type { ContactLocationLabel } from "@optee/constants";
-import { HubspotProvider } from "@optee/hubspot-server";
 import {
   type ContactHsId,
   type ContactUuid,
@@ -35,46 +34,22 @@ export const ContactLocationProvider = {
           locationHsId: LocationHsId;
         },
   ) {
-    // Depending on the sync state (and the fact that our schedule jobs has properly or not updated ids) we can't know if we have to delete by uuid or hsId
-
     if ("contactUuid" in data) {
       const { contactUuid, locationUuid } = data;
 
-      const res = await ContactLocationRepository.delete({
+      await ContactLocationRepository.delete({
         contactUuid,
         locationUuid,
       });
-
-      await Promise.all(
-        res
-          .map((r) =>
-            r.contactId && r.locationId
-              ? { contactId: r.contactId, locationId: r.locationId }
-              : null,
-          )
-          .filter(isNotNullish)
-          .map((r) =>
-            HubspotProvider.deleteContactAssociationWithLocation(
-              r.contactId,
-              r.locationId,
-            ),
-          ),
-      );
     }
 
     if ("contactHsId" in data) {
       const { contactHsId, locationHsId } = data;
 
-      await Promise.all([
-        ContactLocationRepository.delete({
-          contactHsId,
-          locationHsId,
-        }),
-        HubspotProvider.deleteContactAssociationWithLocation(
-          contactHsId,
-          locationHsId,
-        ),
-      ]);
+      await ContactLocationRepository.delete({
+        contactHsId,
+        locationHsId,
+      });
     }
   },
 

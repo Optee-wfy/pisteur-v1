@@ -34,8 +34,6 @@ import {
 import { MailersendProvider } from "@optee/mailersend-server";
 import type {
   ExternalContact,
-  HubspotContact,
-  HubspotPro,
   LegalEntityUuid,
   LocationBdnb,
   ProUuid,
@@ -79,8 +77,8 @@ export const ProspectProvider = {
     prompt: string;
     externalContact: Partial<ExternalContact>;
     locationBdnb: LocationBdnb;
-    pro: HubspotPro;
-    proContact: Partial<HubspotContact>;
+    pro: Record<string, unknown>;
+    proContact: Record<string, unknown>;
   }): string {
     const { externalContact, locationBdnb: location, pro, proContact } = input;
 

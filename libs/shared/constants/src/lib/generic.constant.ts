@@ -7,8 +7,7 @@ export const contactEmail = "contact@optee.io";
 export const KWH_RATE = 7000;
 export const KWH_PRICE = 0.22; // In euros
 
-export const DEMO_FILE_URL =
-  "https://144886321.fs1.hubspotusercontent-eu1.net/hubfs/144886321/quotes/3-2.pdf";
+export const DEMO_FILE_URL = "";
 
 export const VICTOR_CALENDLY =
   "https://meetings-eu1.hubspot.com/victor-giacobbi";
@@ -25,15 +24,8 @@ export const MARKETPLACE_AUTH_URL = MARKETPLACE_UI_URL + "/auth";
 
 export const SHOWCASE_DEMO_URL = "https://www.optee.io/demo";
 
-export const HUBSPOT_OPERATIONS_URL =
-  "https://app-eu1.hubspot.com/contacts/144886321/record/0-3/";
-
 export const CEELAB_ADDRESS =
   "8 rue Notre Dame de \n Lorette 75009 PARIS \n FRANCE";
-export const HS_QUOTES_BASE_URL =
-  "https://app-eu1.hubspot.com/contacts/144886321/record/2-130955327/";
-export const HS_CONTACTS_BASE_URL =
-  "https://app-eu1.hubspot.com/contacts/144886321/record/0-1/";
 
 export const SIMULATION_BASE_UUID = "uuid_";
 

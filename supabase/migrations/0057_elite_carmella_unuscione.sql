@@ -1,1 +1,0 @@
-ALTER TABLE "deals" DROP COLUMN IF EXISTS "bot_brief_response";

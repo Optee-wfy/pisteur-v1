@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { FormHubspotComponent } from "../form-hubspot/form-hubspot.component";
 
 @Component({
   selector: "swc-contact-form",
@@ -17,9 +16,8 @@ import { FormHubspotComponent } from "../form-hubspot/form-hubspot.component";
         projet de rénovation énergétique.
       </p>
     </div>
-    <swc-form-hubspot class="lg:max-w-3xl" type="lite" />
   `,
-  imports: [FormHubspotComponent],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactFormComponent {}

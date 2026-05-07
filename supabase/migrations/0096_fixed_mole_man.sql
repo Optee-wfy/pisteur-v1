@@ -1,1 +1,0 @@
-ALTER TABLE "personne_morale" ADD COLUMN "aucun_contact_trouvable" boolean DEFAULT false;

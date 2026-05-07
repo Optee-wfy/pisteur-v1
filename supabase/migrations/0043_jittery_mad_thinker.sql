@@ -1,1 +1,0 @@
-ALTER TABLE "deals" ADD COLUMN "date_de_lancement_previsionnelle" date;

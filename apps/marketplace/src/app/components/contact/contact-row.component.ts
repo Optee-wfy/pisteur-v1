@@ -7,7 +7,7 @@ import {
   input,
   signal,
 } from "@angular/core";
-import { HS_CONTACTS_BASE_URL, UserType } from "@optee/constants";
+import { UserType } from "@optee/constants";
 import { DialogService } from "@optee/dialog";
 import { IconXmarkComponent } from "@optee/icons";
 import type {
@@ -33,7 +33,7 @@ import { ClientContactFormComponent } from "../permission/client-contact-form.co
         class="text-primary-700 underline"
         rel="noopener"
         target="_blank"
-        [href]="hsContactUrl + contact().id"
+        [href]="contact().id"
       >
         {{ contact().firstName ?? "-" }} {{ contact().lastName ?? "-" }}
       </a>
@@ -131,7 +131,6 @@ export class ContactRowComponent {
   duplicatedAssociations = input<boolean>();
   role = input<string | null>();
 
-  protected readonly hsContactUrl = HS_CONTACTS_BASE_URL;
   protected readonly dialogService = inject(DialogService);
   protected readonly toastService = inject(ToastService);
 

@@ -1,1 +1,0 @@
-ALTER TYPE "pro_status_enum" ADD VALUE 'inscription_plateforme_autonome';

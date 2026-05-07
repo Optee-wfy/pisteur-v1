@@ -1,1 +1,0 @@
-ALTER TYPE "pro_status_enum" ADD VALUE 'Invitation envoyée';

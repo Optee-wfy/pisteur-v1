@@ -10,7 +10,6 @@ import {
 import { ContactLocationRepository } from "@optee/contact-location-server";
 import { ContactRepository } from "@optee/contact-server";
 import { GooglePlacesProvider } from "@optee/google-places-server";
-import { HubspotProvider } from "@optee/hubspot-server";
 import { LegalEntityRepository } from "@optee/legal-entity-server";
 import {
   LocationBdnbAdminProvider,
@@ -90,21 +89,11 @@ export const locationRouter = router({
         }
       }
 
-      const [res] = await Promise.all([
-        LocationProvider.create({
-          clientUuid: client.uuid,
-          contactUuid: contact.uuid,
-          ...input,
-        }),
-
-        HubspotProvider.trackEvent({
-          email: ctx.user.email,
-          eventId: "location_add",
-          properties: {
-            source: input.source,
-          },
-        }),
-      ]);
+      const res = await LocationProvider.create({
+        clientUuid: client.uuid,
+        contactUuid: contact.uuid,
+        ...input,
+      });
 
       return res;
     }),
@@ -273,8 +262,6 @@ export const locationRouter = router({
           locationUuid: input.uuid,
         });
       }
-
-      await LocationProvider.uploadToHubspot(input);
 
       return {
         status: 201,

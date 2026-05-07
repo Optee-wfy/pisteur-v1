@@ -11,7 +11,6 @@ import {
   QuoteStage,
   tryAgainOrContactUs,
 } from "@optee/constants";
-import { HubspotProvider } from "@optee/hubspot-server";
 import type {
   HubspotLocation,
   HubspotNewQuote,
@@ -183,17 +182,7 @@ export const QuoteRepository = {
       );
     }
 
-    if (!result.fileId) {
-      console.error(
-        `🚩 Récupération d'un devis: Aucun fichier associé à ce devis [${quoteUuid}].`,
-      );
-      throw new Error(
-        `Aucun fichier associé à ce devis. ${tryAgainOrContactUs}`,
-      );
-    }
-
-    const url = await HubspotProvider.getFileUrl(result.fileId);
-    return { ...result, url };
+    return { ...result, url: null as string | null };
   },
 
   async getRelatedAttachmentId(quoteUuid: QuoteUuid) {

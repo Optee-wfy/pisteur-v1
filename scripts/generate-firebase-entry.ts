@@ -20,7 +20,7 @@ if (!apiFnName) {
 }
 
 const cors = process.env["VITE_ENV"] === "production"
-  ? '["https://optee.io", "https://www.optee.io", "https://app.optee.io", "https://app-eu1.hubspot.com"]'
+  ? '["https://optee.io", "https://www.optee.io", "https://app.optee.io"]'
   : 'true'; // @todo That means that someone might call a Preview API from anywhere. Could be risky. Adding the preview URL would be better.
 
 const minInstances = process.env["VITE_ENV"] === "production" ? 1 : 0;

@@ -214,10 +214,6 @@ export const prosRouter = router({
       return ProProvider.getContract(pro, input);
     }),
 
-  getHubspotPrestations: adminProcedure.query(() =>
-    ProProvider.getHubspotPrestations(),
-  ),
-
   getAll: adminProcedure
     .input(z.object({ filter: z.string() }))
     .query(({ input }) => ProRepository.getAll(input.filter)),

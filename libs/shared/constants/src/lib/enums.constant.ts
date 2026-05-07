@@ -12,11 +12,8 @@ import {
   SECTOR_DATA,
 } from "./location.constant";
 import { DEAL_STAGES } from "./operation-phase.constant";
-import { OPERATION_HUBSPOT_PRESTATION_IDS } from "./operation.constant";
 import { PRO_STATUSES } from "./pro.constant";
 import { QUOTE_STAGES } from "./quote.constant";
-
-export const TOKEN_IDS = ["hubspot"] as const;
 
 export const APP_ENUMS = [
   {
@@ -32,27 +29,19 @@ export const APP_ENUMS = [
     constantsArray: Array.from(SECTOR_DATA),
   },
   {
-    enumName: "hs_pipeline_stage_enum",
+    enumName: "pipeline_stage_enum",
     constantsArray: Array.from(QUOTE_STAGES),
-  },
-  {
-    enumName: "prestation_enum",
-    constantsArray: Array.from(OPERATION_HUBSPOT_PRESTATION_IDS),
   },
   {
     enumName: "pro_status_enum",
     constantsArray: Array.from(PRO_STATUSES),
   },
   {
-    enumName: "token_enum",
-    constantsArray: Array.from(TOKEN_IDS),
-  },
-  {
     enumName: "origine_inscription_plateforme_client_enum",
     constantsArray: Array.from(CLIENT_ORIGINS),
   },
   {
-    enumName: "hs_pipeline_client_stage_enum",
+    enumName: "pipeline_client_stage_enum",
     constantsArray: Array.from(CLIENT_STAGES),
   },
   {
@@ -64,7 +53,7 @@ export const APP_ENUMS = [
     constantsArray: Array.from(CONTACT_ORIGINS),
   },
   {
-    enumName: "hs_pipeline_contact_stage_enum",
+    enumName: "pipeline_contact_stage_enum",
     constantsArray: Array.from(CONTACT_STAGES),
   },
   {
@@ -72,7 +61,7 @@ export const APP_ENUMS = [
     constantsArray: Array.from(CONTACT_JOB_TYPES).map((job) => job.value),
   },
   {
-    enumName: "hs_invoice_pipeline_stage_enum",
+    enumName: "invoice_pipeline_stage_enum",
     constantsArray: Array.from(INVOICE_STAGES),
   },
   {

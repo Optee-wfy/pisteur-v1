@@ -1,1 +1,0 @@
-ALTER TYPE "type_association_pro_contact_externe" ADD VALUE 'SEARCHED';

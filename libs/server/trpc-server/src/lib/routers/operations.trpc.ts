@@ -8,7 +8,6 @@ import {
   UserType,
 } from "@optee/constants";
 import { ContactRepository } from "@optee/contact-server";
-import { HubspotProvider } from "@optee/hubspot-server";
 import { LocationProvider, LocationRepository } from "@optee/location-server";
 import {
   ClientUuid,
@@ -26,9 +25,7 @@ import {
 import { ProProvider, ProRepository } from "@optee/pro-server";
 import {
   fileDtoSchema,
-  getFile,
   isEmailFromOptee,
-  isNotNullish,
 } from "@optee/utils";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -174,23 +171,11 @@ export const operationRouter = router({
       );
       return Promise.all(
         documents.map(async (document) => {
-          try {
-            const fileUrl = await HubspotProvider.getFileUrl(document.id);
-            return {
-              name: document.name,
-              updatedAt: document.updatedAt,
-              fileUrl,
-            };
-          } catch (e) {
-            console.error(
-              `Failed to retrieve URL for document ${document.id}: ${e}`,
-            );
-            return {
-              name: document.name,
-              updatedAt: document.updatedAt,
-              fileUrl: null,
-            };
-          }
+          return {
+            name: document.name,
+            updatedAt: document.updatedAt,
+            fileUrl: null as string | null,
+          };
         }),
       );
     }),
@@ -469,30 +454,7 @@ export const operationRouter = router({
         filesUrls: z.array(z.string()),
       }),
     )
-    .mutation(async ({ input }) => {
-      const { uuid, filesUrls } = input;
-
-      const notesUuids = await Promise.all(
-        filesUrls.map((fileUrl) =>
-          getFile(fileUrl).then((file) => {
-            return HubspotProvider.uploadFile({
-              file,
-              folderPath: "operations-documents",
-              fileName: "document_operation_" + uuid + ".pdf",
-            });
-          }),
-        ),
-      );
-
-      await Promise.all(
-        notesUuids.filter(isNotNullish).map((noteUuid) =>
-          OperationRepository.associateToNote({
-            operationUuid: uuid,
-            noteUuid,
-          }),
-        ),
-      );
-
+    .mutation(async () => {
       return {
         status: 201,
         message: `Document téléchargé avec succès 🥳`,

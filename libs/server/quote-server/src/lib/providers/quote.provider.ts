@@ -10,7 +10,6 @@ import {
   YouSignRequestStatus,
 } from "@optee/constants";
 import { ContactRepository } from "@optee/contact-server";
-import { HubspotProvider } from "@optee/hubspot-server";
 import { LocationRepository } from "@optee/location-server";
 import { MailersendProvider } from "@optee/mailersend-server";
 import type { ProUuid } from "@optee/models";
@@ -101,7 +100,7 @@ export const QuoteProvider = {
       );
     }
 
-    const url = await HubspotProvider.getFileUrl(row.fileId);
+    const url: string | null = null;
 
     const status = row.hsQuote.signRequestYousignId
       ? await YouSignProvider.getSignatureRequestStatus(
@@ -369,10 +368,10 @@ export const QuoteProvider = {
       const { email, firstName, lastName, userUuid, id } =
         await QuoteProvider.validateSignatoryInfo(operationUuid, quoteUuid);
 
-      if (!userUuid && email && id) {
+      if (!userUuid && email) {
         await UserProvider.createUserAccount({
           email,
-          contactHsId: id,
+          contactUuid: contact.uuid,
           emailTemplate: "INVITE_CLIENT_CONTACT",
         });
       }
@@ -536,23 +535,6 @@ export const QuoteProvider = {
       throw new Error("Impossible de transférer le fichier.");
     }
 
-    const fileName =
-      quote.stage === QuoteStage.DEVIS_SIGNE
-        ? `[Signed]-${quote.name ?? quote.uuid}.pdf`
-        : `${quote.name ?? quote.uuid}.pdf`;
-
-    const noteUuid = await HubspotProvider.uploadFile({
-      file: blob,
-      folderPath: "quotes",
-      fileName,
-    });
-
-    if (noteUuid) {
-      await QuoteRepository.associateToNote({
-        noteUuid,
-        quoteUuid: quote.uuid,
-      });
-    }
   },
 
   async acceptWithYousign({
