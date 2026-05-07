@@ -7,7 +7,7 @@ import {
 } from "@optee/constants";
 import { BobComponent } from "@optee/ui/components/organisms/bob/bob.component";
 import { Tooltip } from "primeng/tooltip";
-import { combineLatest, from, map } from "rxjs";
+import { combineLatest, from, map, of } from "rxjs";
 import { z } from "zod";
 import trpcClient from "../../../../trpc-client";
 
@@ -85,7 +85,7 @@ import trpcClient from "../../../../trpc-client";
 export class OperationsUnsyncedAdminComponent {
   unsyncedOperationsRows$ = combineLatest([
     from(trpcClient.operations.getAllUnsynced.query()),
-    from(trpcClient.operations.getHubspotOperationTypes.query()),
+    of([] as string[]), // HubSpot removed — stub with empty array
   ]).pipe(
     map(([rows, hsOperationsTypes]) => {
       return rows.map((row) => {

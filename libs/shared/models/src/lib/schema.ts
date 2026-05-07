@@ -60,7 +60,6 @@ import {
   ROOF_MATERIALS,
   SECTOR_DATA,
   SHUTTER_TYPES,
-  TOKEN_IDS,
   VENTILATION_TYPES,
   WALL_MATERIALS,
   WALL_STRUCTURE_MATERIALS,
@@ -160,11 +159,10 @@ export const hsOwnersTable = pgTable("owners", {
 export type HubspotOwner = InferSelectModel<typeof hsOwnersTable>;
 export type HubspotNewOwner = never;
 
-// TOKENS
-
-export type TokenHsId = (typeof TOKEN_IDS)[number];
-
-export const tokenEnum = pgEnum("token_enum", TOKEN_IDS);
+// TOKENS — à redéfinir lors de la refonte du schéma DB
+export const TOKEN_IDS_LOCAL = [] as const;
+export type TokenHsId = string;
+export const tokenEnum = pgEnum("token_enum", ["placeholder"] as [string, ...string[]]);
 
 export const hsTokensTable = pgTable("tokens", {
   id: tokenEnum("id").unique().notNull(),

@@ -6,7 +6,6 @@ import type {
 } from "@optee/constants";
 import type { ContactHsId, ContactUuid } from "@optee/models";
 import posthog from "posthog-js";
-import trpcClient, { TRPC_SKIP_BATCH_KEY } from "../../trpc-client";
 
 // Declare global gtag variable
 declare const gtag: (
@@ -128,18 +127,6 @@ export class TrackingService {
     eventId: ClientTrackingEventId,
     properties?: Record<string, string>,
   ) {
-    await trpcClient.users.trackEvent.mutate(
-      {
-        eventId,
-        properties,
-      },
-      {
-        context: {
-          [TRPC_SKIP_BATCH_KEY]: true,
-        },
-      },
-    );
-
     amplitude.track(eventId, properties);
 
     posthog.capture(eventId, properties);

@@ -65,6 +65,7 @@
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "@types/google.maps": "^3.58.1",
+    "balanced-match": "^4.0.4",
     "contentful": "^11.7.15",
     "cors": "^2.8.5",
     "csv-parser": "^3.2.0",

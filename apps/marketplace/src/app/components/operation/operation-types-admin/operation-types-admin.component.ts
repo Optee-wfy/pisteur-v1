@@ -5,8 +5,7 @@ import { OPERATION_SUBTYPES, OPERATION_TYPES_ARR } from "@optee/constants";
 import { MessageComponent } from "@optee/ui/components/molecules/message/message.component";
 import { BobComponent } from "@optee/ui/components/organisms/bob/bob.component";
 import { MultiSelect } from "primeng/multiselect";
-import { from, map, shareReplay, startWith } from "rxjs";
-import trpcClient from "../../../../trpc-client";
+import { map, of, shareReplay, startWith } from "rxjs";
 import { OperationTagComponent } from "../operation-tag/operation-tag.component";
 import { OperationTypesRowComponent } from "../operation-types-row/operation-types-row.component";
 
@@ -213,9 +212,8 @@ export class OperationTypesAdminComponent {
     COLUMNS.filter((column) => column.default).map((column) => column.id),
   );
 
-  hsOperationsTypes$ = from(
-    trpcClient.operations.getHubspotOperationTypes.query(),
-  ).pipe(shareReplay(1));
+  // HubSpot removed — stub with empty array
+  hsOperationsTypes$ = of([] as string[]).pipe(shareReplay(1));
 
   missingHsOperationsTypes$ = this.hsOperationsTypes$.pipe(
     map(this.concatInexistantsOperationType),
@@ -235,9 +233,8 @@ export class OperationTypesAdminComponent {
     shareReplay(1),
   );
 
-  hsProsPrestationTypes$ = from(
-    trpcClient.pros.getHubspotPrestations.query(),
-  ).pipe(shareReplay(1));
+  // HubSpot removed — stub with empty array
+  hsProsPrestationTypes$ = of([] as string[]).pipe(shareReplay(1));
 
   missingHsProsPrestationTypes$ = this.hsProsPrestationTypes$.pipe(
     map(this.concatInexistantsOperationType),

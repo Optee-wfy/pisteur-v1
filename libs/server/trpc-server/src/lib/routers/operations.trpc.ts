@@ -86,10 +86,6 @@ export const operationRouter = router({
     };
   }),
 
-  getHubspotOperationTypes: adminProcedure
-    .input(z.void())
-    .query(() => OperationProvider.getHubspotOperationTypes()),
-
   getUuidByHsId: publicProcedure
     .input(z.object({ operationHsId: OperationHsId }))
     .query(async ({ input }) =>

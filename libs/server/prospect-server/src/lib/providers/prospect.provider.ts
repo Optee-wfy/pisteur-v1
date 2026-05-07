@@ -171,15 +171,15 @@ export const ProspectProvider = {
         ROI estimé : ${safe(estimatedRoi)}
 
 
-      - **Entreprise expéditrice (utilisatrice d’Optee) :**
-        Nom de l’entreprise : ${safe(pro.name)}
-        Description : ${safe(pro.description)}
-        Lien calendrier à insérer si demande de rendez vous : ${safe(pro.calendarSite ?? "N/A")} (reformate le lien si nécessaire pour obtenir une URL valide commençant par http/https)
+      - **Entreprise expéditrice (utilisatrice d'Optee) :**
+        Nom de l'entreprise : ${safe(pro['name'] as string)}
+        Description : ${safe(pro['description'] as string)}
+        Lien calendrier à insérer si demande de rendez vous : ${safe((pro['calendarSite'] as string | null) ?? "N/A")} (reformate le lien si nécessaire pour obtenir une URL valide commençant par http/https)
 
         - **Contact expéditeur :**
-        Nom : ${safe(proContact.lastName)}
-        Prénom : ${safe(proContact.firstName)}
-        Fonction : ${safe(proContact.jobTitle)}
+        Nom : ${safe(proContact['lastName'] as string)}
+        Prénom : ${safe(proContact['firstName'] as string)}
+        Fonction : ${safe(proContact['jobTitle'] as string)}
 
         Ne mentionne jamais d'informations personnelles non fournies explicitement dans le contexte.
 

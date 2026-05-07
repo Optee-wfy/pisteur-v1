@@ -371,7 +371,6 @@ export const QuoteProvider = {
       if (!userUuid && email) {
         await UserProvider.createUserAccount({
           email,
-          contactUuid: contact.uuid,
           emailTemplate: "INVITE_CLIENT_CONTACT",
         });
       }
