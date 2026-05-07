@@ -1,0 +1,13 @@
+{
+  "name": "mailersend-server",
+  "root": "libs/server/third-party/mailersend-server",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/third-party/mailersend-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

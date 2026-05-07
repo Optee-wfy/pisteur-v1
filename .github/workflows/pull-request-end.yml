@@ -1,0 +1,18 @@
+name: Pull request cleanup
+
+on:
+  pull_request:
+    types: [closed]
+
+env:
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  FIREBASE_PREVIEW_NAME: preview_pr_${{ github.event.pull_request.number }}
+  FIREBASE_API_FN_NAME: api_server_pr_${{ github.event.pull_request.number }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Finalize the Sentry release
+        run: |
+          npx sentry-cli releases finalize $FIREBASE_PREVIEW_NAME

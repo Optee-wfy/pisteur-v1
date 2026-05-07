@@ -1,0 +1,1 @@
+ALTER TYPE "pro_subscription_enum" ADD VALUE 'Impaye';

@@ -1,0 +1,13 @@
+{
+  "name": "quote-location-server",
+  "root": "libs/server/quote-location-server",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/quote-location-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

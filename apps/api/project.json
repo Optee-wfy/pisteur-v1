@@ -1,0 +1,79 @@
+{
+  "name": "api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/api/src",
+  "tags": ["scope:trpc-app"],
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsx watch src/listen.ts",
+        "cwd": "apps/api"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": [],
+      "options": {
+        "commands": ["tsup --config apps/api/tsup.config.ts"],
+        "parallel": false
+      }
+    },
+    "generateFirebaseEntry": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts/generate-firebase-entry.ts"
+      }
+    },
+    "generateFirebasePackageJson": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["npx tsx scripts/generate-firebase-package-json.ts"],
+        "parallel": false
+      }
+    },
+    "generateFirebaseJson": {
+      "executor": "nx:run-commands",
+      "options": {
+        "outputs": ["dist/apps/api"],
+        "commands": ["npx tsx scripts/generate-firebase-json.ts"],
+        "parallel": false
+      }
+    },
+    "sentry:uploadMaps": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "npx sentry-cli releases set-commits $SENTRY_RELEASE --auto --org optee-app --project api",
+          "npx sentry-cli sourcemaps inject --org optee-app --project api dist/apps/api/ --release $SENTRY_RELEASE --ignore node_modules --quiet",
+          "npx sentry-cli sourcemaps upload --org optee-app --project api dist/apps/api/ --release $SENTRY_RELEASE --ignore node_modules --quiet"
+        ],
+        "parallel": false
+      }
+    },
+    "prepareDeploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "nx run api:generateFirebaseEntry",
+          "nx run api:build",
+          "nx run api:generateFirebasePackageJson",
+          "nx run api:generateFirebaseJson",
+          "nx run api:sentry:uploadMaps"
+        ],
+        "parallel": false
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "firebase --non-interactive deploy --only functions:$FIREBASE_API_FN_NAME --force --config firebase.json"
+        ],
+        "parallel": false
+      },
+      "dependsOn": ["prepareDeploy"]
+    }
+  }
+}

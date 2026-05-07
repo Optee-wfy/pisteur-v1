@@ -1,0 +1,1 @@
+ALTER TABLE "deals" ADD COLUMN "amount_ttc" real;

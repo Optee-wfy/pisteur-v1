@@ -1,0 +1,14 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["src"],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.stories.ts",
+    "**/jest.config.ts",
+    "**/test-setup.ts",
+    "**/vite.config.ts"
+  ]
+}

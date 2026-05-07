@@ -1,0 +1,13 @@
+{
+  "name": "openai-server",
+  "root": "libs/server/third-party/openai-server",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/third-party/openai-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

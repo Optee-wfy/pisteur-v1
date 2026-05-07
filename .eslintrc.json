@@ -1,0 +1,43 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nx", "@rx-angular", "local-rules"],
+  "extends": ["plugin:prettier/recommended", "plugin:@rx-angular/zoneless"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/consistent-type-imports": "error",
+        "lines-between-class-members": [
+          "error",
+          "always",
+          { "exceptAfterSingleLine": true }
+        ],
+        "@typescript-eslint/consistent-type-assertions": [
+          "error",
+          {
+            "assertionStyle": "as",
+            "objectLiteralTypeAssertions": "never"
+          }
+        ],
+        "no-else-return": ["error"],
+        "curly": ["error"]
+      }
+    },
+    {
+      "files": ["**/repositories/*.ts", "**/providers/*.ts", "**/*.repository.ts", "**/*.provider.ts"],
+      "rules": {
+        "local-rules/no-this-in-object-methods": ["error"]
+      }
+    },
+    {
+      "files": ["*.spec.ts"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
+    }
+  ]
+}

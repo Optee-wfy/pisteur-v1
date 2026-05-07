@@ -1,0 +1,13 @@
+{
+  "name": "quote-pro-server",
+  "root": "libs/server/quote-pro-server",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/quote-pro-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

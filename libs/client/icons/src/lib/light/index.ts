@@ -1,0 +1,14 @@
+export { IconLightFileFoldedCornerComponent } from "./icon-light-file-folded-corner.component";
+export { IconLightFlameComponent } from "./icon-light-flame.component";
+export { IconLightFourCirclesComponent } from "./icon-light-four-circles.component";
+export { IconLightHandshakeComponent } from "./icon-light-handshake.component";
+export { IconLightHouseEmptyComponent } from "./icon-light-house-empty.component";
+export { IconLightHouseLeafComponent } from "./icon-light-house-leaf.component";
+export { IconLightHouseLightningComponent } from "./icon-light-house-lightning.component";
+export { IconLightHouseMagnifierComponent } from "./icon-light-house-magnifier.component";
+export { IconLightLightbulbOnComponent } from "./icon-light-lightbulb-on.component";
+export { IconLightOperationComponent } from "./icon-light-operation.component";
+export { IconLightShieldComponent } from "./icon-light-shield.component";
+export { IconLightSunComponent } from "./icon-light-sun.component";
+export { IconLightVentilationComponent } from "./icon-light-ventilation.component";
+export { IconLightWaterDropComponent } from "./icon-light-water-drop.component";

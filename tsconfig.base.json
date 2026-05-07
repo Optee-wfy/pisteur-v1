@@ -1,0 +1,158 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noEmitHelpers": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "paths": {
+      "@optee/bdnb-server": [
+        "libs/server/third-party/bdnb-server/src/index.ts"
+      ],
+      "@optee/blog": ["libs/client/blog/src/index.ts"],
+      "@optee/client-server": ["libs/server/client-server/src/index.ts"],
+      "@optee/config/*": ["libs/client/config/src/lib/*"],
+      "@optee/constants": ["libs/shared/constants/src/index.ts"],
+      "@optee/constants/*": ["libs/shared/constants/src/lib/*"],
+      "@optee/env": ["libs/shared/environments/index.ts"],
+      "@optee/contact-client-server": [
+        "libs/server/contact-client-server/src/index.ts"
+      ],
+      "@optee/contact-location-server": [
+        "libs/server/contact-location-server/src/index.ts"
+      ],
+      "@optee/contact-operation-server": [
+        "libs/server/contact-operation-server/src/index.ts"
+      ],
+      "@optee/contact-pro-server": [
+        "libs/server/contact-pro-server/src/index.ts"
+      ],
+      "@optee/contact-server": ["libs/server/contact-server/src/index.ts"],
+      "@optee/dialog": ["libs/client/dialog/src/index.ts"],
+      "@optee/enum-server": ["libs/server/enum-server/src/index.ts"],
+      "@optee/file-server": ["libs/server/file-server/src/index.ts"],
+      "@optee/google-places-server": [
+        "libs/server/third-party/google-places-server/src/index.ts"
+      ],
+      "@optee/pappers-server": [
+        "libs/server/third-party/pappers-server/src/index.ts"
+      ],
+      "@optee/societe-info-server": [
+        "libs/server/third-party/societe-info-server/src/index.ts"
+      ],
+      "@optee/hunter-server": [
+        "libs/server/third-party/hunter-server/src/index.ts"
+      ],
+      "@optee/fullenrich-server": [
+        "libs/server/third-party/fullenrich-server/src/index.ts"
+      ],
+      "@optee/hubspot-server": [
+        "libs/server/third-party/hubspot-server/src/index.ts"
+      ],
+      "@optee/stripe-server": [
+        "libs/server/stripe-server/src/index.ts"
+      ],
+      "@optee/icons": ["libs/client/icons/src/index.ts"],
+      "@optee/bdd-server": [
+        "libs/server/bdd-server/src/index.ts"
+      ],
+      "@optee/location-client-server": [
+        "libs/server/location-client-server/src/index.ts"
+      ],
+      "@optee/location-server": ["libs/server/location-server/src/index.ts"],
+      "@optee/mail-integration-server": [
+        "libs/server/mail-integration-server/src/index.ts"
+      ],
+      "@optee/mailersend-server": [
+        "libs/server/third-party/mailersend-server/src/index.ts"
+      ],
+      "@optee/models": ["libs/shared/models/src/index.ts"],
+      "@optee/models/*": ["libs/shared/models/src/lib/*"],
+      "@optee/note-server": ["libs/server/note-server/src/index.ts"],
+      "@optee/openai-server": [
+        "libs/server/third-party/openai-server/src/index.ts"
+      ],
+      "@optee/operation-server": ["libs/server/operation-server/src/index.ts"],
+      "@optee/owner-server": ["libs/server/owner-server/src/index.ts"],
+      "@optee/pdf-generator-server": [
+        "libs/server/third-party/pdf-generator-server/src/index.ts"
+      ],
+      "@optee/pro-client-server": [
+        "libs/server/pro-client-server/src/index.ts"
+      ],
+      "@optee/pro-location-server": [
+        "libs/server/pro-location-server/src/index.ts"
+      ],
+      "@optee/pro-saved-location-server": [
+        "libs/server/pro-saved-location-server/src/index.ts"
+      ],
+      "@optee/pro-server": ["libs/server/pro-server/src/index.ts"],
+      "@optee/quote-client-server": [
+        "libs/server/quote-client-server/src/index.ts"
+      ],
+      "@optee/quote-location-server": [
+        "libs/server/quote-location-server/src/index.ts"
+      ],
+      "@optee/quote-operation-server": [
+        "libs/server/quote-operation-server/src/index.ts"
+      ],
+      "@optee/quote-pro-server": ["libs/server/quote-pro-server/src/index.ts"],
+      "@optee/quote-server": ["libs/server/quote-server/src/index.ts"],
+      "@optee/simulator-server": ["libs/server/simulator-server/src/index.ts"],
+      "@optee/prospect-server": ["libs/server/prospect-server/src/index.ts"],
+      "@optee/supabase-server": ["libs/server/supabase-server/src/index.ts"],
+      "@optee/trpc-client": ["libs/client/trpc/src/index.ts"],
+      "@optee/trpc-server": ["libs/server/trpc-server/src/index.ts"],
+      "@optee/ui/*": ["libs/client/ui/src/lib/*"],
+      "@optee/user-server": ["libs/server/user-server/src/index.ts"],
+      "@optee/utils": ["libs/shared/utils/src/index.ts"],
+      "@optee/yousign-server": [
+        "libs/server/third-party/yousign-server/src/index.ts"
+      ],
+      "@optee/contentful-server": [
+        "libs/server/third-party/contentful-server/src/index.ts"
+      ],
+      "@optee/blogpost-server": [
+        "libs/server/blogpost-server/src/index.ts"
+      ],
+      "@optee/usecase-server": [
+        "libs/server/usecase-server/src/index.ts"
+      ],
+      "@optee/location-bdnb-server": [
+        "libs/server/location-bdnb-server/src/index.ts"
+      ],
+      "@optee/legal-entity-server": [
+        "libs/server/legal-entity-server/src/index.ts"
+      ],
+      "@optee/pro-legal-entity-server": [
+        "libs/server/pro-legal-entity-server/src/index.ts"
+      ],
+      "@optee/external-contact-server": [
+        "libs/server/external-contact-server/src/index.ts"
+      ],
+       "@optee/location-bdnb-legal-entity-server": [
+        "libs/server/location-bdnb-legal-entity-server/src/index.ts"
+      ],
+      "@optee/enrichment-server": [
+        "libs/server/enrichment-server/src/index.ts"
+      ],
+      "@supabase/*": ["supabase/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

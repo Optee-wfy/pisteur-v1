@@ -1,0 +1,13 @@
+{
+  "name": "hunter-server",
+  "root": "libs/server/third-party/hunter-server",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/third-party/hunter-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

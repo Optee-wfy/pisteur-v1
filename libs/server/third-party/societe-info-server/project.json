@@ -1,0 +1,13 @@
+{
+  "name": "societe-info-server",
+  "root": "libs/server/third-party/societe-info-server",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/third-party/societe-info-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

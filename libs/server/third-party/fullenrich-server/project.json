@@ -1,0 +1,13 @@
+{
+  "name": "fullenrich-server",
+  "root": "libs/server/third-party/fullenrich-server",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/third-party/fullenrich-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

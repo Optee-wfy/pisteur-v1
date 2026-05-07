@@ -1,0 +1,147 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "production": [
+      "default",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/**/tsconfig.spec.json",
+      "!{projectRoot}/**/jest.config.ts",
+      "!{projectRoot}/**/test-setup.ts",
+      "!{projectRoot}/**/*.cy.ts",
+      "!{projectRoot}/**/cypress.config.ts",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/src/test-setup.[jt]s"
+    ],
+    "angular": [
+      "production",
+      "{workspaceRoot}/node_modules/@angular/**",
+      "!{projectRoot}/vite.config.ts"
+    ],
+    "vite": [
+      "production",
+      "{workspaceRoot}/node_modules/vite/**",
+      "!{projectRoot}/angular.json"
+    ]
+  },
+  "targetDefaults": {
+    "@angular-devkit/build-angular:application": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/eslint:lint": {
+      "cache": true,
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "{workspaceRoot}/eslint.config.js"
+      ]
+    },
+    "@nx/jest:jest": {
+      "cache": true,
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "options": {
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "e2e-ci--**/*": {
+      "dependsOn": ["^build"]
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "build": {
+      "dependsOn": [
+        {
+          "projects": "{dependencies}",
+          "target": "build",
+          "params": "forward"
+        }
+      ]
+    },
+    "generate:assets": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tsx scripts/generate-assets.ts"
+      },
+      "cache": true,
+      "inputs": [
+        "{workspaceRoot}/libs/public/assets/**/*",
+        "{workspaceRoot}/scripts/generate-assets.ts"
+      ],
+      "outputs": [
+        "{workspaceRoot}/libs/shared/constants/src/lib/assets.constant.ts"
+      ]
+    }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/cypress/plugin",
+      "options": {
+        "targetName": "e2e",
+        "openTargetName": "open-cypress",
+        "componentTestingTargetName": "component-test",
+        "ciTargetName": "e2e-ci"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/vite/plugin",
+      "options": {
+        "buildTargetName": "vite:build",
+        "serveTargetName": "vite:serve",
+        "previewTargetName": "preview",
+        "serveStaticTargetName": "serve-static",
+        "typecheckTargetName": "typecheck"
+      }
+    },
+    {
+      "plugin": "@nx/vitest",
+      "options": {
+        "testTargetName": "vite:test"
+      }
+    }
+  ],
+  "generators": {
+    "@nx/angular:application": {
+      "e2eTestRunner": "cypress",
+      "linter": "eslint",
+      "style": "scss",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "style": "scss"
+    },
+    "@nx/web:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "vitest",
+      "e2eTestRunner": "none"
+    }
+  }
+}

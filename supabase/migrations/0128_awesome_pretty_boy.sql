@@ -1,0 +1,1 @@
+ALTER TABLE "pros" ADD COLUMN "status_interne" text DEFAULT 'NEW' NOT NULL;

@@ -1,0 +1,99 @@
+{
+  "functions": {
+    "source": "dist/apps/api",
+    "runtime": "nodejs20",
+    "timeoutSeconds": 120,
+    "memory": "2GB"
+  },
+  "hosting": [
+    {
+      "target": "marketplace-target",
+      "public": "dist/apps/marketplace/browser",
+      "cleanUrls": true,
+      "rewrites": [
+        "IS_FILLED_BY_FIREBASE_TS_SCRIPT"
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|js|css|eot|otf|ttf|ttc|woff|woff2|font.css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(json|ico)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=0, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=0, must-revalidate"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "showcase-target",
+      "public": "dist/apps/showcase/browser",
+      "cleanUrls": true,
+      "headers": [
+        {
+          "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|js|css|eot|otf|ttf|ttc|woff|woff2|font.css)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(json|ico)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=0, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=0, must-revalidate"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

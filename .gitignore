@@ -1,0 +1,87 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+firebase-debug.log
+.firebase
+
+# compiled output
+dist
+tmp
+/out-tsc
+
+# dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/shared.code-snippets
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+.nx/cache
+.nx/workspace-data
+.env
+/test-results/
+/blob-report/
+
+.angular
+
+# Marketplace specific
+
+# Test coverage results
+apps/marketplace/coverage
+
+# Vite
+vite.config.ts.timestamp-*
+
+# Sentry Config File
+.sentryclirc
+.env.sentry-build-plugin
+
+# Seed
+supabase/seed.sql
+
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md
+
+vite.config.*.timestamp*
+
+optee-app-firebase-sa.json
+pglite-debug.log
+firebase.json
+firebase-entry.ts
+
+assets/bdnb/bdnb-groupe_geom_part5.csv
+assets/bdnb/bdnb-raw-copro_part1.csv
+assets/bdnb/bdnb-raw-copro_part2.csv
+assets/bdnb/bdnb-raw-copro_part3.csv
+assets/bdnb/bdnb-raw-copro_part4.csv
+assets/bdnb/bdnb-raw-tertiaire_part4.csv
+assets/bdnb/bdnb-raw-tertiaire_part3.csv
+assets/bdnb/bdnb-raw-tertiaire_part2.csv
+assets/bdnb/bdnb-raw-tertiaire_part1.csv
+assets/bdnb/bdnb-raw-tertiaire_naf_counts.csv

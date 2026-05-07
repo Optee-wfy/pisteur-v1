@@ -1,0 +1,13 @@
+{
+  "name": "icons",
+  "projectType": "library",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/client/icons/src",
+  "prefix": "icon",
+  "tags": ["npm:public", "lib"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

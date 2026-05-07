@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "optee-app"
+  },
+  "targets": {
+    "optee-app": {
+      "hosting": {
+        "showcase-target": [
+          "optee-showcase"
+        ],
+        "marketplace-target": [
+          "optee-app"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

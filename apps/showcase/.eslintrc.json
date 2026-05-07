@@ -1,0 +1,27 @@
+{
+  "extends": ["../../.eslintrc.angular.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "swc",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "swc",
+            "style": "kebab-case"
+          }
+        ]
+      }
+    }
+  ]
+}

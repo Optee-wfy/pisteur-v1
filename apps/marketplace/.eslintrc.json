@@ -1,0 +1,27 @@
+{
+  "extends": ["../../.eslintrc.angular.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "mkp",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "mkp",
+            "style": "kebab-case"
+          }
+        ]
+      }
+    }
+  ]
+}

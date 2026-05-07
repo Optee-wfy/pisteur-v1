@@ -1,0 +1,15 @@
+{
+  "name": "@optee/constants",
+  "version": "0.0.1",
+  "main": "../../../dist/libs/shared/constants/src/index.js",
+  "types": "../../../dist/libs/shared/constants/src/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "../../../dist/libs/shared/constants/src/index.d.ts",
+      "default": "../../../dist/libs/shared/constants/src/index.js"
+    }
+  },
+  "private": true,
+  "type": "module"
+}

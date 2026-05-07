@@ -1,0 +1,2 @@
+CREATE INDEX IF NOT EXISTS "legal_entity_nb_employees_range_index" ON "personne_morale" USING btree ("trancheEffectifs");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "legal_entity_nb_premises_index" ON "personne_morale" USING btree ("nb_locaux_du_groupe");

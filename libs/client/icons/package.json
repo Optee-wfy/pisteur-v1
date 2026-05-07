@@ -1,0 +1,11 @@
+{
+  "name": "@optee/icons",
+  "scripts": {
+    "build:icons-preview": "node ./src/generate-icons-preview.mjs"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0"
+  }
+}

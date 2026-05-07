@@ -1,0 +1,12 @@
+export { IconBicolorAuditComponent } from "./icon-bicolor-audit.component";
+export { IconBicolorConfianceComponent } from "./icon-bicolor-confiance.component";
+export { IconBicolorCvcComponent } from "./icon-bicolor-cvc.component";
+export { IconBicolorEclairageComponent } from "./icon-bicolor-eclairage.component";
+export { IconBicolorExpertiseComponent } from "./icon-bicolor-expertise.component";
+export { IconBicolorGtbComponent } from "./icon-bicolor-gtb.component";
+export { IconBicolorHouseComponent } from "./icon-bicolor-house.component";
+export { IconBicolorIsolationComponent } from "./icon-bicolor-isolation.component";
+export { IconBicolorOptimiseComponent } from "./icon-bicolor-optimise.component";
+export { IconBicolorPlanActionComponent } from "./icon-bicolor-plan-action.component";
+export { IconBicolorProfessionnelComponent } from "./icon-bicolor-professionnel.component";
+export { IconBicolorReseauComponent } from "./icon-bicolor-reseau.component";

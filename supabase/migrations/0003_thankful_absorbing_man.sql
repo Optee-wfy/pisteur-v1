@@ -1,0 +1,1 @@
+ALTER TABLE "devis" ADD COLUMN "raison_de_refus" text;

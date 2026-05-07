@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <h2>Objet : Demande de réinitialisation de mot de passe</h2>
+
+    <p>Cher-e client-e,</p>
+    <p>
+      Vous pouvez dès maintenant accéder à la plateforme Optee et à tous vos
+      projets depuis
+      <a href="{{ .SiteURL}}/auth/reset-password/{{ .TokenHash }}"
+        >ce lien</a
+      >, qui vous permet de créer ou réinitialiser un mot de passe.
+    </p>
+    <a href="{{ .SiteURL}}/auth/reset-password/{{ .TokenHash }}"
+      >{{ .SiteURL}}/auth/reset-password/{{ .TokenHash }}</a
+    >
+    <p>
+      Attention,
+      <a href="{{ .SiteURL}}/auth/reset-password/{{ .TokenHash }}"
+        >ce lien</a
+      >
+      est actif 24h seulement. Si vous les avez dépassés, veuillez refaire la
+      demande.
+    </p>
+
+    <p>Cordialement,</p>
+    <p>L’équipe Optee</p>
+  </body>
+</html>

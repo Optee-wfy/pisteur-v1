@@ -1,0 +1,240 @@
+@use 'sass:meta';
+@use '../../../libs/client/config/src/lib/styles';
+@use './primeng';
+@use './shared-status-chip';
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+:root {
+  --prospect-sidebar-width: 172px;
+  @media (min-width: 1280px) {
+    --prospect-sidebar-width: 240px;
+  }
+}
+
+// Defines specificity order (tailwind styles are overridden by primeng which are overridden by override-css etc ...)
+@layer tailwind-base, primeng, tailwind-utilities, override-css;
+
+@layer override-css {
+  :root {
+    --app-scrollbar-thumb: #a3c0ff;
+    --app-scrollbar-track: transparent;
+    --app-scrollbar-size: 5px;
+    --app-scrollbar-size-horizontal: 2px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--app-scrollbar-thumb) var(--app-scrollbar-track);
+  }
+
+  *::-webkit-scrollbar {
+    width: var(--app-scrollbar-size);
+    height: var(--app-scrollbar-size-horizontal);
+  }
+
+  *::-webkit-scrollbar:vertical {
+    width: var(--app-scrollbar-size);
+  }
+
+  *::-webkit-scrollbar:horizontal {
+    height: var(--app-scrollbar-size-horizontal);
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--app-scrollbar-track);
+  }
+
+  *::-webkit-scrollbar-thumb,
+  *::-webkit-scrollbar-thumb:hover,
+  *::-webkit-scrollbar-thumb:active {
+    background-color: var(--app-scrollbar-thumb);
+    border-radius: 9999px;
+    border: 0;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  html,
+  body {
+    display: block;
+    height: 100%;
+  }
+
+  html {
+    height: 100%;
+
+    body {
+      & {
+        margin: 0;
+        height: 100%;
+        background-color: #f3f8fb;
+      }
+    }
+  }
+
+  @media print {
+    body {
+      height: auto;
+      overflow: visible;
+    }
+  }
+
+  .pdf-page {
+    background-color: white;
+    min-height: 850px;
+    width: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+    margin-inline: auto;
+    break-inside: avoid;
+    break-after: page;
+    padding-inline: 64px;
+    padding-block: 48px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .page-number {
+      position: absolute;
+      bottom: 2rem;
+      right: 3rem;
+      width: 100%;
+      text-align: right;
+      font-style: italic;
+    }
+
+    @media print {
+      height: 100%;
+      width: 100%;
+      box-shadow: none;
+      margin-bottom: 0;
+    }
+  }
+
+  .scrollable-shadow-zone {
+    @apply scrollbar-stable shadow-inner-bottom max-h-full max-w-full overflow-auto rounded-lg;
+  }
+
+  button.prospect-button, a.prospect-button {
+    @apply hover:bg-green-700 bg-green-600 relative flex h-7 cursor-pointer items-center justify-center gap-2 rounded-lg px-2 text-sm font-medium text-white transition-all;
+    &:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
+    &.outlined {
+      @apply bg-transparent border border-green-600 text-green-600 hover:bg-green-50 hover:border-green-700 hover:text-green-700;
+    }
+  }
+
+  button.enrich-button {
+    @apply hover:bg-primary-200 bg-primary-100 text-primary-400 border-primary-400 flex items-center justify-center gap-2 rounded-xl border px-2 py-0.5 text-xs font-semibold;
+  }
+
+  .pister-link {
+      @apply hover:bg-granite-100 text-granite-900 flex items-center justify-start gap-1 rounded-lg px-2 py-1.5 text-sm transition-all cursor-pointer;
+      &.inverted {
+        @apply bg-granite-100 !justify-center hover:bg-white disabled:cursor-not-allowed disabled:opacity-40 hover:border-granite-300 border border-transparent;
+      }
+    }
+
+  oui-checkbox .oui-checkbox-control {
+    --p-checkbox-hover-border-color: #000000;
+    --p-checkbox-border-color: #000000;
+    --p-checkbox-focus-border-color: #000000;
+    --p-checkbox-checked-background: #000000;
+    --p-checkbox-checked-hover-background: #000000;
+    --p-checkbox-icon-checked-color: #ffffff;
+    --p-checkbox-icon-checked-hover-color: #ffffff;
+  }
+
+  oui-checkbox .oui-checkbox-options-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.625rem;
+  }
+
+  @media (min-width: 768px) {
+    oui-checkbox .oui-checkbox-options-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1280px) {
+    oui-checkbox .oui-checkbox-options-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  oui-checkbox .oui-checkbox-option {
+    min-height: 7.75rem;
+    background: #fff;
+    border-color: #d7dee9;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  }
+
+  oui-checkbox .oui-checkbox-option:hover {
+    background: #f8fafc;
+    border-color: #cfd8e3;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
+  }
+
+  oui-checkbox .oui-checkbox-option-selected {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--oui-checkbox-option-bg) 82%, white) 0%,
+      var(--oui-checkbox-option-bg) 100%
+    );
+    border-color: var(--oui-checkbox-option-color);
+    box-shadow: 0 6px 14px color-mix(in srgb, var(--oui-checkbox-option-color) 14%, white);
+  }
+
+  oui-checkbox .oui-checkbox-option-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    color: #fff;
+    background: #cbd5e1;
+  }
+
+  oui-checkbox .oui-checkbox-option-icon :is(svg, i, span) {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  oui-checkbox .oui-checkbox-option-title {
+    color: #334155;
+    font-size: 0.95rem;
+  }
+
+  oui-checkbox .oui-checkbox-option-description {
+    color: #475569;
+    font-size: 0.65rem;
+    line-height: 1.2;
+  }
+
+  oui-checkbox .oui-checkbox-option-selected .oui-checkbox-option-icon {
+    background: var(--oui-checkbox-option-color);
+  }
+
+  oui-checkbox .oui-checkbox-option-selected .oui-checkbox-option-title {
+    color: var(--oui-checkbox-option-color);
+  }
+
+  oui-checkbox .oui-checkbox-control-hidden {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+  }
+
+}

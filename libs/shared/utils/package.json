@@ -1,0 +1,15 @@
+{
+  "name": "@optee/utils",
+  "version": "0.0.1",
+  "main": "../../../dist/libs/shared/utils/src/index.js",
+  "types": "../../../dist/libs/shared/utils/src/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "../../../dist/libs/shared/utils/src/index.d.ts",
+      "default": "../../../dist/libs/shared/utils/src/index.js"
+    }
+  },
+  "private": true,
+  "type": "module"
+}

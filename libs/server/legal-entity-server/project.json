@@ -1,0 +1,13 @@
+{
+  "name": "legal-entity-server",
+  "root": "libs/server/legal-entity-server",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/legal-entity-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

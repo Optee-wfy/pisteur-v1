@@ -1,0 +1,1 @@
+export const PRO_ONBOARD_FREE_PREFIX = "[ONBOARD_FREEMIUM]-";

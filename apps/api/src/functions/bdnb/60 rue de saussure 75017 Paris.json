@@ -1,0 +1,197 @@
+[
+  {
+    "cle_interop_adr": "75117_8847_00060",
+    "batiment_groupe_id": "bdnb-bg-VP7F-JBKA-5KWJ",
+    "lien_valide": true,
+    "code_departement_insee": "75",
+    "code_commune_insee": "75117",
+    "commune_parente": "75056",
+    "code_epci_insee": "200054781",
+    "code_iris": "751176711",
+    "libelle_commune_insee": "Paris 17e Arrondissement",
+    "code_region_insee": "11",
+    "s_geom_groupe": 355,
+    "l_parcelle_id": [
+      "75117000CI0056"
+    ],
+    "l_cle_interop_adr": [
+      "75117_8847_00060"
+    ],
+    "l_libelle_adr": [
+      "60 rue de saussure, 75017, Paris 17e Arrondissement"
+    ],
+    "l_siren": [
+      "U23185107",
+      "477739221",
+      "808609283",
+      "U16540708",
+      "U23137801"
+    ],
+    "l_denomination_proprietaire": [
+      "SCI MIRACA",
+      "POLYMNIE",
+      "VILACA ET FILS",
+      "A2A",
+      "LIGUE DE FOOTBALL PROFESSIONNEL"
+    ],
+    "code_qp": null,
+    "nom_qp": null,
+    "quartier_prioritaire": false,
+    "libelle_adr_principale_ban": "60 rue de saussure, 75017, Paris 17e Arrondissement",
+    "nb_adresse_valid_ban": 1,
+    "cle_interop_adr_principale_ban": "75117_8847_00060",
+    "conso_pro_dle_elec_2020": 0,
+    "conso_res_dle_elec_2020": 17753.6,
+    "conso_pro_dle_gaz_2020": null,
+    "conso_res_dle_gaz_2020": null,
+    "nb_pdl_pro_dle_gaz_2020": null,
+    "nb_pdl_res_dle_gaz_2020": null,
+    "nb_pdl_pro_dle_elec_2020": 0,
+    "nb_pdl_res_dle_elec_2020": 14,
+    "nb_classe_bilan_dpe_a": 0,
+    "nb_classe_bilan_dpe_b": 0,
+    "nb_classe_bilan_dpe_c": 0,
+    "nb_classe_bilan_dpe_d": 0,
+    "nb_classe_bilan_dpe_e": 2,
+    "nb_classe_bilan_dpe_f": 0,
+    "nb_classe_bilan_dpe_g": 0,
+    "nb_classe_conso_energie_arrete_2012_a": 0,
+    "nb_classe_conso_energie_arrete_2012_b": 0,
+    "nb_classe_conso_energie_arrete_2012_c": 0,
+    "nb_classe_conso_energie_arrete_2012_d": 1,
+    "nb_classe_conso_energie_arrete_2012_e": 1,
+    "nb_classe_conso_energie_arrete_2012_f": 0,
+    "nb_classe_conso_energie_arrete_2012_g": 0,
+    "nb_classe_conso_energie_arrete_2012_nc": 0,
+    "identifiant_dpe": "2375E2182263E",
+    "arrete_2021": true,
+    "date_reception_dpe": "2023-06-28T18:24:46.155056",
+    "type_dpe": "dpe arrêté 2021 3cl logement",
+    "classe_bilan_dpe": "E",
+    "classe_conso_energie_arrete_2012": null,
+    "conso_5_usages_ep_m2": 301.470273521985,
+    "emission_ges_5_usages_m2": 63.55,
+    "conso_3_usages_ep_m2_arrete_2012": null,
+    "emission_ges_3_usages_ep_m2_arrete_2012": null,
+    "type_vitrage": "double vitrage",
+    "type_materiaux_menuiserie": "pvc",
+    "type_gaz_lame": "argon ou krypton",
+    "type_fermeture": "abscence de fermeture pour la baie vitrée",
+    "vitrage_vir": false,
+    "epaisseur_lame": 14,
+    "u_baie_vitree": 2.6731010452961668,
+    "facteur_solaire_baie_vitree": 0.51,
+    "l_orientation_baie_vitree": [
+      "est",
+      "ouest"
+    ],
+    "pourcentage_surface_baie_vitree_exterieur": 0.44565217391304346,
+    "traversant": "est ouest",
+    "presence_balcon": false,
+    "u_mur_exterieur": 2.4,
+    "type_isolation_mur_exterieur": "non isole",
+    "materiaux_structure_mur_exterieur": "murs en béton banché",
+    "type_isolation_plancher_bas": null,
+    "type_plancher_bas_deperditif": null,
+    "u_plancher_bas_final_deperditif": null,
+    "type_isolation_plancher_haut": "ITI",
+    "type_plancher_haut_deperditif": "dalle béton",
+    "u_plancher_haut_deperditif": 0.606061,
+    "classe_inertie": "Légère",
+    "type_installation_chauffage": "collectif",
+    "type_energie_chauffage": "gaz",
+    "type_generateur_chauffage": "chaudiere gaz standard",
+    "type_generateur_chauffage_anciennete": "récent(<15ans)",
+    "type_energie_chauffage_appoint": null,
+    "type_generateur_chauffage_appoint": null,
+    "type_generateur_chauffage_anciennete_appoint": null,
+    "chauffage_solaire": false,
+    "type_generateur_climatisation": null,
+    "type_generateur_climatisation_anciennete": null,
+    "type_installation_ecs": "collectif",
+    "type_generateur_ecs": "chaudiere gaz standard",
+    "type_generateur_ecs_anciennete": "récent(<15ans)",
+    "ecs_solaire": false,
+    "type_ventilation": "Ventilation naturelle par conduit",
+    "type_production_energie_renouvelable": null,
+    "annee_construction": 1930,
+    "nb_log": 14,
+    "nb_niveau": 7,
+    "surface_emprise_sol": 355,
+    "usage_niveau_1_txt": "Résidentiel collectif",
+    "mat_mur_txt": "BETON - BRIQUES",
+    "mat_toit_txt": "BETON",
+    "contient_fictive_geom_groupe": false,
+    "geom_groupe": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              649768.9,
+              6865302
+            ],
+            [
+              649752.4,
+              6865287.5
+            ],
+            [
+              649759.9,
+              6865277
+            ],
+            [
+              649766.2,
+              6865282.5
+            ],
+            [
+              649767.6,
+              6865283.7
+            ],
+            [
+              649781,
+              6865295.4
+            ],
+            [
+              649774.3,
+              6865303.4
+            ],
+            [
+              649772.7,
+              6865305.4
+            ],
+            [
+              649768.9,
+              6865302
+            ]
+          ]
+        ]
+      ]
+    },
+    "hauteur_mean": 18,
+    "altitude_sol_mean": 43,
+    "alea_argiles": null,
+    "alea_radon": "Faible",
+    "nb_log_rnc": 14,
+    "nb_lot_garpark_rnc": 17,
+    "nb_lot_tertiaire_rnc": 18,
+    "numero_immat_principal": "AD1705060",
+    "distance_batiment_historique_plus_proche": 230,
+    "nom_batiment_historique_plus_proche": "Eglise Sainte-Marie-des-Batignolles",
+    "perimetre_bat_historique": true,
+    "nom_quartier_qpv": null,
+    "fiabilite_cr_adr_niv_2": "batiment sans voisin à l'adresse",
+    "fiabilite_cr_adr_niv_1": "données croisées à l'adresse fiables",
+    "fiabilite_emprise_sol": "FAIBLE",
+    "fiabilite_hauteur": "BONNE",
+    "croisement_geospx_reussi": null,
+    "uw": 2.6731010452961668,
+    "nb_installation_chauffage": 1,
+    "nb_installation_ecs": 1,
+    "type_generateur_ecs_appoint": null,
+    "type_generateur_ecs_anciennete_appoint": null,
+    "annee_construction_dpe": 1970,
+    "type_batiment_dpe": "appartement",
+    "id_reseau": "7501C",
+    "indicateur_distance_au_reseau": "entre 100 et 200m"
+  }
+]

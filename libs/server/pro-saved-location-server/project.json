@@ -1,0 +1,13 @@
+{
+  "name": "pro-saved-location-server",
+  "root": "libs/server/pro-saved-location-server",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/pro-saved-location-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

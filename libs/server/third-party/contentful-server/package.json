@@ -1,0 +1,17 @@
+{
+  "name": "@optee/contentful-server",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "peerDependencies": {
+    "contentful": "^11.7.15",
+    "@contentful/rich-text-html-renderer": "^17.1.0"
+  },
+  "private": true,
+  "type": "module"
+}

@@ -1,0 +1,63 @@
+{
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "github.copilot.editor.enableAutoCompletions": true,
+  "emmet.triggerExpansionOnTab": true,
+  "editor.renderWhitespace": "all",
+  "editor.stickyScroll.enabled": true,
+  "editor.stickyScroll.defaultModel": "indentationModel",
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.organizeImports",
+    "source.fixAll.eslint",
+    "source.formatDocument"
+  ],
+  "editor.formatOnSave": false,
+  "eslint.validate": ["javascript", "typescript", "json", "jsonc"],
+  "eslint.workingDirectories": [
+    {
+      "changeProcessCWD": true,
+      "directory": "./apps/marketplace"
+    },
+    {
+      "changeProcessCWD": true,
+      "directory": "./libs"
+    }
+  ],
+  "eslint.useFlatConfig": false,
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "**/node_modules/zod/**/map.d.ts"
+  ],
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+  "typescript.tsserver.maxTsServerMemory": 6144,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.nx": true,
+    "**/.DS_Store": true
+  },
+  "files.watcherExclude": {
+    "**/dist": true,
+    "**/archives/**": true,
+    "**/.nx": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/tmp/**": true,
+    "**/.angular/**": true
+  },
+  "search.exclude": {
+    "**/dist": true,
+    "**/archives/**": true,
+    "**/.nx": true,
+    "**/node_modules": true,
+    "**/tmp/**": true,
+    "**/*.d.ts": true,
+    "**/*.d.ts.map": true,
+    "**/.angular/**": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "tailwindCSS.experimental.classRegex": [
+    ["host:\\s*\\{\\s*class:\\s*['\"`]([^'\"]*)['\"`]"]
+  ],
+  "nxConsole.generateAiAgentRules": true,
+}

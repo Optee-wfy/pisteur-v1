@@ -1,0 +1,1 @@
+ALTER TABLE "batiments" ALTER COLUMN "nom" SET NOT NULL;

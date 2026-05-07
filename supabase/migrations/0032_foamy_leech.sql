@@ -1,0 +1,1 @@
+ALTER TABLE "batiments" ADD COLUMN "echec_bdnb" boolean;

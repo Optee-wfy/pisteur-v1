@@ -1,0 +1,129 @@
+name: Deploy to production
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+permissions:
+  actions: read # Needed for nx-set-shas when run on the main branch
+  contents: read # Needed for nx-set-shas when run on the main branch
+
+env:
+  VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+  VITE_SUPABASE_KEY: ${{ vars.VITE_SUPABASE_KEY }}
+  VITE_ENV: ${{ vars.VITE_ENV }}
+  SENTRY_API_DSN: ${{ secrets.SENTRY_API_DSN }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  SENTRY_RELEASE: ${{ github.sha }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  SUPABASE_ADMIN_KEY: ${{ secrets.SUPABASE_ADMIN_KEY }}
+  OPENAI_ASSISTANT_API_KEY: ${{ secrets.OPENAI_ASSISTANT_API_KEY }}
+  YOUSIGN_API_KEY: ${{ secrets.YOUSIGN_API_KEY }}
+  YOUSIGN_WEBHOOK_SECRET_KEY: ${{ secrets.YOUSIGN_WEBHOOK_SECRET_KEY }}
+  SHOWCASE_LINK: "www.optee.io"
+  CEELAB_LINK: "www.ceelab.fr"
+  STACKSYNC_BEARER_TOKEN: ${{ secrets.STACKSYNC_BEARER_TOKEN }}
+  MAILERSEND_API_KEY: ${{ secrets.MAILERSEND_API_KEY }}
+  FIREBASE_API_FN_NAME: api_server
+  HUBSPOT_CLIENT_ID: ${{ secrets.HUBSPOT_CLIENT_ID }}
+  HUBSPOT_SECRET: ${{ secrets.HUBSPOT_SECRET }}
+  HUBSPOT_REFRESH_TOKEN: ${{ secrets.HUBSPOT_REFRESH_TOKEN }}
+  PDFSHIFT_API_KEY: ${{ secrets.PDFSHIFT_API_KEY }}
+  PAPPERS_API_KEY: ${{ secrets.PAPPERS_API_KEY }}
+  HUNTER_API_KEY: ${{ secrets.HUNTER_API_KEY }}
+  FULLENRICH_API_KEY: ${{ secrets.FULLENRICH_API_KEY }}
+  SOCIETE_INFO_API_KEY: ${{ secrets.SOCIETE_INFO_API_KEY }}
+  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+  STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+  VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
+  STRIPE_PRICE_ESSENTIAL: ${{ secrets.STRIPE_PRICE_ESSENTIAL }}
+  STRIPE_PRICE_PRO: ${{ secrets.STRIPE_PRICE_PRO }}
+  STRIPE_PRICE_BUSINESS: ${{ secrets.STRIPE_PRICE_BUSINESS }}
+  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+  GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+  MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
+  MICROSOFT_CLIENT_SECRET: ${{ secrets.MICROSOFT_CLIENT_SECRET }}
+  MICROSOFT_REDIRECT_URI: ${{ secrets.MICROSOFT_REDIRECT_URI }}
+  OAUTH_TOKEN_ENCRYPTION_KEY: ${{ secrets.OAUTH_TOKEN_ENCRYPTION_KEY }}
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
+
+      - uses: actions/cache@v4
+        id: node_modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.node_modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Fail fast if Nx graph is out of sync
+        run: npx nx sync:check
+
+      - name: Set up shas
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Cache Nx cache directory
+        uses: actions/cache@v4
+        id: nx-cache
+        with:
+          path: |
+            .nx/cache
+            .nx/workspace-data
+          key: ${{ runner.os }}-nx-${{ github.ref_name }}-${{ hashFiles('**/project.json', '**/nx.json', '**/workspace.json', 'nx.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-${{ github.ref_name }}-
+            ${{ runner.os }}-nx-
+
+      - name: Set up Google Application Credentials
+        run: |
+          echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}' | base64 -d > $HOME/gcp-key.json
+          chmod 600 "$HOME/gcp-key.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+
+      - name: Deploy API
+        run: npx nx deploy api
+        env:
+          NX_DISABLE_DB: true
+
+      - name: Generate environment-ci.ts from CI env vars
+        run: |
+          cat > libs/shared/environments/environment-ci.ts << EOF
+          export const environmentCI = {
+            slug: "production",
+            sentryRelease: "${SENTRY_RELEASE}",
+            supabaseUrl: "${VITE_SUPABASE_URL}",
+            supabaseKey: "${VITE_SUPABASE_KEY}",
+            apiPort: null,
+            apiUrl: "https://app.optee.io"
+          };
+          EOF
+
+      - name: Deploy to production (excluding API)
+        run: npx nx affected -t deploy --skip-nx-cache --parallel --exclude=api
+        env:
+          NX_DISABLE_DB: true

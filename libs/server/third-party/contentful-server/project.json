@@ -1,0 +1,13 @@
+{
+  "name": "contentful-server",
+  "root": "libs/server/third-party/contentful-server",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/server/third-party/contentful-server/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  },
+  "tags": ["lib"]
+}

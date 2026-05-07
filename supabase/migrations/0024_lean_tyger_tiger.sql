@@ -1,0 +1,1 @@
+ALTER TABLE "batiments" ADD COLUMN "geom_groupe" jsonb;

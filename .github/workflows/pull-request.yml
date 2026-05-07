@@ -1,0 +1,252 @@
+name: Deploy
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: preview-deploy-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  pull-requests: write # Needed to create a comment on the PR
+  actions: read
+  contents: read
+
+env:
+  VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+  VITE_SUPABASE_KEY: ${{ vars.VITE_SUPABASE_KEY }}
+  VITE_ENV: ${{ vars.VITE_ENV }}
+  SENTRY_API_DSN: ${{ secrets.SENTRY_API_DSN }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  SENTRY_RELEASE: preview_pr_${{ github.event.pull_request.number }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  SUPABASE_ADMIN_KEY: ${{ secrets.SUPABASE_ADMIN_KEY }}
+  OPENAI_ASSISTANT_API_KEY: ${{ secrets.OPENAI_ASSISTANT_API_KEY }}
+  YOUSIGN_API_KEY: ${{ secrets.YOUSIGN_API_KEY }}
+  YOUSIGN_WEBHOOK_SECRET_KEY: ${{ secrets.YOUSIGN_WEBHOOK_SECRET_KEY }}
+  NX_BASE: ${{ github.event.pull_request.base.sha }}
+  NX_HEAD: ${{ github.event.pull_request.head.sha }}
+  SHOWCASE_LINK: "www.optee.io"
+  CEELAB_LINK: "www.ceelab.fr"
+  STACKSYNC_BEARER_TOKEN: ${{ secrets.STACKSYNC_BEARER_TOKEN }}
+  MAILERSEND_API_KEY: ${{ secrets.MAILERSEND_API_KEY }}
+  FIREBASE_PREVIEW_NAME: preview_pr_${{ github.event.pull_request.number }}
+  FIREBASE_API_FN_NAME: api_server_pr_${{ github.event.pull_request.number }}
+  HUBSPOT_CLIENT_ID: ${{ secrets.HUBSPOT_CLIENT_ID }}
+  HUBSPOT_SECRET: ${{ secrets.HUBSPOT_SECRET }}
+  HUBSPOT_REFRESH_TOKEN: ${{ secrets.HUBSPOT_REFRESH_TOKEN }}
+  PDFSHIFT_API_KEY: ${{ secrets.PDFSHIFT_API_KEY }}
+  PAPPERS_API_KEY: ${{ secrets.PAPPERS_API_KEY }}
+  HUNTER_API_KEY: ${{ secrets.HUNTER_API_KEY }}
+  FULLENRICH_API_KEY: ${{ secrets.FULLENRICH_API_KEY }}
+  SOCIETE_INFO_API_KEY: ${{ secrets.SOCIETE_INFO_API_KEY }}
+  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+  STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+  VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
+  STRIPE_PRICE_ESSENTIAL: ${{ secrets.STRIPE_PRICE_ESSENTIAL }}
+  STRIPE_PRICE_PRO: ${{ secrets.STRIPE_PRICE_PRO }}
+  STRIPE_PRICE_BUSINESS: ${{ secrets.STRIPE_PRICE_BUSINESS }}
+  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+  GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+  MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
+  MICROSOFT_CLIENT_SECRET: ${{ secrets.MICROSOFT_CLIENT_SECRET }}
+  MICROSOFT_REDIRECT_URI: ${{ secrets.MICROSOFT_REDIRECT_URI }}
+  OAUTH_TOKEN_ENCRYPTION_KEY: ${{ secrets.OAUTH_TOKEN_ENCRYPTION_KEY }}
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    environment: Deploy previews
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
+
+      - uses: actions/cache@v4
+        id: node_modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        if: steps.node_modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Fail fast if Nx graph is out of sync
+        run: npx nx sync:check
+
+      - name: Cache Nx cache directory
+        uses: actions/cache@v4
+        id: nx-cache
+        with:
+          path: |
+            .nx/cache
+            .nx/workspace-data
+          key: ${{ runner.os }}-nx-${{ github.ref_name }}-${{ hashFiles('**/project.json', '**/nx.json', '**/workspace.json', 'nx.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nx-${{ github.ref_name }}-
+            ${{ runner.os }}-nx-
+
+      # Étapes de tests avant le déploiement
+      - name: Run linting on affected projects
+        run: npx nx affected -t lint --parallel=5
+
+      - name: Run type checking on affected projects
+        run: npx nx affected -t typecheck --parallel=5
+
+      - name: Run tests on affected projects
+        run: npx nx affected -t test --parallel=5 --ci
+
+      - name: Set up Google Application Credentials
+        run: |
+          echo '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}' | base64 -d > $HOME/gcp-key.json
+          chmod 600 "$HOME/gcp-key.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcp-key.json" >> $GITHUB_ENV
+
+      - name: Deploy API preview
+        run: npx nx deploy api 2>&1 | tee firebase_api_deploy_log.txt
+        env:
+          NX_DISABLE_DB: true
+
+      - name: Export API Deploy Preview URLs
+        id: extract_api_deploy_preview_urls
+        run: |
+          set -e  # Exit on any error
+          if [ -f firebase_api_deploy_log.txt ]; then
+            # Strip ANSI escape codes
+            sed -r 's/\x1B\[[0-9;]*[mK]//g' firebase_api_deploy_log.txt > firebase_api_deploy_log_clean.txt
+
+            # Extract the URL (will fail the step if URL not found)
+            FB_API=$(grep -oP 'Function URL \(api_server_pr_\d+\(europe-west1\)\):\s*\Khttps://[^\s]+' firebase_api_deploy_log_clean.txt)
+
+            if [ -n "$FB_API" ]; then
+              echo "FB_API_CONFIG=${FB_API}" >> $GITHUB_ENV
+              echo "✅ API Firebase URL extracted: $FB_API"
+            else
+              echo "❌ No API Firebase URL found in log file"
+              exit 1
+            fi
+          else
+            echo "❌ No firebase_api_deploy_log.txt found - API deployment failed"
+            exit 1
+          fi
+
+      - name: Generate environment-ci.ts from CI env vars
+        run: |
+          cat > libs/shared/environments/environment-ci.ts << EOF
+          export const environmentCI = {
+            slug: "preview",
+            sentryRelease: "${SENTRY_RELEASE}",
+            supabaseUrl: "${VITE_SUPABASE_URL}",
+            supabaseKey: "${VITE_SUPABASE_KEY}",
+            apiPort: null,
+            apiUrl: "${FB_API_CONFIG}"
+          };
+          EOF
+
+      - name: Deploy preview (excluding API)
+        run: npx nx affected -t deploy:preview --skip-nx-cache --parallel --exclude=api
+        env:
+          NX_DISABLE_DB: true
+
+      - name: Export Marketplace Deploy Preview URLs
+        id: extract_marketplace_deploy_preview_urls
+        run: |
+          if [ -f firebase_marketplace_deploy_log.txt ]; then
+            # Strip ANSI escape codes
+            sed -r 's/\x1B\[[0-9;]*[mK]//g' firebase_marketplace_deploy_log.txt > firebase_marketplace_deploy_log_clean.txt
+
+            # Extract the URL
+            FB_MARKETPLACE=$(grep -oP 'Channel URL \(optee-app\):\s*\Khttps://[^\s]+' firebase_marketplace_deploy_log_clean.txt || true)
+
+            if [ -n "$FB_MARKETPLACE" ]; then
+              echo "FB_MARKETPLACE_CONFIG=${FB_MARKETPLACE}" >> $GITHUB_ENV
+              echo "✅ Marketplace Firebase URL extracted: $FB_MARKETPLACE"
+            else
+              echo "⚠️ No Marketplace Firebase URL found in log file"
+            fi
+          else
+            echo "ℹ️ No firebase_marketplace_deploy_log.txt found - marketplace was not deployed"
+          fi
+
+      - name: Export Showcase Deploy Preview URLs
+        id: extract_showcase_deploy_preview_urls
+        run: |
+          if [ -f firebase_showcase_deploy_log.txt ]; then
+            # Strip ANSI escape codes
+            sed -r 's/\x1B\[[0-9;]*[mK]//g' firebase_showcase_deploy_log.txt > firebase_showcase_deploy_log_clean.txt
+
+            # Extract the URL
+            FB_SHOWCASE=$(grep -oP 'Channel URL \(optee-showcase\):\s*\Khttps://[^\s]+' firebase_showcase_deploy_log_clean.txt || true)
+
+            if [ -n "$FB_SHOWCASE" ]; then
+              echo "FB_SHOWCASE_CONFIG=${FB_SHOWCASE}" >> $GITHUB_ENV
+              echo "✅ Showcase Firebase URL extracted: $FB_SHOWCASE"
+            else
+              echo "⚠️ No Showcase Firebase URL found in log file"
+            fi
+          else
+            echo "ℹ️ No firebase_showcase_deploy_log.txt found - showcase was not deployed"
+          fi
+
+      - name: Post or Update Comment on Pull Request
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const commentTag = "<!-- deployment-preview-comment -->";
+            let commentBody = `${commentTag}\nCertaines applications ont été déployée(s):\n\n`;
+
+            if (process.env['FB_SHOWCASE_CONFIG']) {
+              const firstStringContent = process.env['FB_SHOWCASE_CONFIG'];
+              commentBody += `**Showcase Firebase preview URL**:\n${firstStringContent}\n`;
+            }
+
+            if (process.env['FB_MARKETPLACE_CONFIG']) {
+              const secondStringContent = process.env['FB_MARKETPLACE_CONFIG'];
+              commentBody += `**Marketplace Firebase Preview URL**:\n${secondStringContent}\n`;
+            }
+
+            if (process.env['FB_API_CONFIG']) {
+              const thirdStringContent = process.env['FB_API_CONFIG'];
+              commentBody += `**API Firebase Preview URL**:\n${thirdStringContent}\n`;
+            }
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number
+            });
+
+            const existingComment = comments.find(comment => comment.body.includes(commentTag));
+
+            if (existingComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: commentBody
+              });
+            } else {
+              // Create a new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: commentBody
+              });
+            }
