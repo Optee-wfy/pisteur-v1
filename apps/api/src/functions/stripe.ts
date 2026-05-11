@@ -2,26 +2,24 @@ import { StripeProvider } from "@optee/stripe-server";
 import type { Request, Response } from "express";
 import Stripe from "stripe";
 
-const stripeSecretKey = process.env["STRIPE_SECRET_KEY"];
+const stripeSecretKey = process.env["STRIPE_SECRET_KEY"] ?? "";
 if (!stripeSecretKey) {
-  throw new Error("Missing required environment variable: STRIPE_SECRET_KEY");
+  console.warn("⚠️ STRIPE_SECRET_KEY not set — Stripe routes disabled.");
 }
 
-const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-11-17.clover" });
+const stripe = stripeSecretKey ? new Stripe(stripeSecretKey, { apiVersion: "2025-11-17.clover" }) : null;
 
-const webHookSecret = process.env["STRIPE_WEBHOOK_SECRET"];
+const webHookSecret = process.env["STRIPE_WEBHOOK_SECRET"] ?? "";
 if (!webHookSecret) {
-  throw new Error(
-    "Missing required environment variable: STRIPE_WEBHOOK_SECRET",
-  );
+  console.warn("⚠️ STRIPE_WEBHOOK_SECRET not set — Stripe webhooks disabled.");
 }
 
-/**
- * Controller used by Stripe (only) to transmit webhook events to our server.
- */
 export const stripeController = async (req: Request, res: Response) => {
-  const sig = req.headers["stripe-signature"];
+  if (!stripe || !webHookSecret) {
+    return res.status(503).send("Stripe not configured");
+  }
 
+  const sig = req.headers["stripe-signature"];
   if (!sig || typeof sig !== "string") {
     return res.status(400).send("Missing Stripe signature");
   }
@@ -37,8 +35,8 @@ export const stripeController = async (req: Request, res: Response) => {
 
     return res.json({ received: true });
   } catch (err) {
-    if (err instanceof stripe.errors.StripeSignatureVerificationError) {
-      console.error("[Stripe] Signature verification failed:", err.message);
+    if (stripe && err instanceof stripe.errors.StripeSignatureVerificationError) {
+      console.error("[Stripe] Signature verification failed:", (err as Error).message);
       return res.status(400).send("Invalid signature");
     }
     console.error("[Stripe] Webhook error:", err);

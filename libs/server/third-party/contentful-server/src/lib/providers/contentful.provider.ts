@@ -1,4 +1,5 @@
-import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import contentfulRenderer from "@contentful/rich-text-html-renderer";
+const { documentToHtmlString } = contentfulRenderer;
 import type { Document } from "@contentful/rich-text-types";
 import { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID } from "@optee/utils";
 import { createClient } from "contentful";

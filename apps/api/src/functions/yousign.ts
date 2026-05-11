@@ -5,12 +5,9 @@ import type { Request, Response } from "express";
 import crypto from "node:crypto";
 import { HttpError } from "./helpers/http-error";
 
-const secret = process.env["YOUSIGN_WEBHOOK_SECRET_KEY"];
-
+const secret = process.env["YOUSIGN_WEBHOOK_SECRET_KEY"] ?? "";
 if (!secret) {
-  throw new Error(
-    "Missing required environment variable: YOUSIGN_WEBHOOK_SECRET_KEY",
-  );
+  console.warn("⚠️ YOUSIGN_WEBHOOK_SECRET_KEY not set — Yousign webhooks disabled.");
 }
 
 /**

@@ -9,13 +9,19 @@ import { formatZodError } from "@optee/utils";
 import OpenAI from "openai";
 import z from "zod";
 
-// Source: https://github.com/baptisteArno/typebot.io/blob/6088a56d3160003d1271780a30c8f622d4d986cb/packages/forge/blocks/openai/src/actions/askAssistant.ts#L125
-const openai = new OpenAI({
-  apiKey: process.env["OPENAI_ASSISTANT_API_KEY"],
-  defaultHeaders: {
-    "api-key": process.env["OPENAI_ASSISTANT_API_KEY"],
-  },
-});
+let _openai: OpenAI | null = null;
+const getOpenAI = () => {
+  if (!_openai) {
+    _openai = new OpenAI({
+      apiKey: process.env["OPENAI_ASSISTANT_API_KEY"] ?? "placeholder",
+      defaultHeaders: {
+        "api-key": process.env["OPENAI_ASSISTANT_API_KEY"] ?? "placeholder",
+      },
+    });
+  }
+  return _openai;
+};
+const openai = new Proxy({} as OpenAI, { get: (_, prop) => (getOpenAI() as any)[prop] });
 
 const LEAD_DETAILS_ASSISTANT_ID = "asst_om8ahhZC3oVA0Q4VDNvbpcK3";
 
