@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingRadar from "@/components/ui/loading-radar";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
@@ -19,7 +20,8 @@ export default function Navbar({ user }: { user: User }) {
   return (
     <header className="relative z-10 bg-white shadow-o">
       <nav className="mx-auto flex max-w-[1480px] items-center px-4 py-4 xl:px-10">
-        <a href="/leads" className="mr-8 flex items-center gap-2">
+        <a href="/leads" className="mr-8 flex items-center gap-2.5">
+          <LoadingRadar size={26} />
           <span className="font-display text-xl font-bold text-primary-700">optee</span>
           <span className="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-700">pisteur</span>
         </a>
@@ -30,6 +32,12 @@ export default function Navbar({ user }: { user: User }) {
             className="rounded-lg px-3 py-2 text-sm font-medium text-granite-700 transition hover:bg-gray-100 hover:text-granite-900"
           >
             Leads
+          </a>
+          <a
+            href="/pisteur"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-granite-700 transition hover:bg-gray-100 hover:text-granite-900"
+          >
+            Pisteur
           </a>
         </div>
 

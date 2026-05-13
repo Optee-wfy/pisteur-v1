@@ -86,3 +86,6 @@ assets/bdnb/bdnb-raw-tertiaire_part2.csv
 assets/bdnb/bdnb-raw-tertiaire_part1.csv
 assets/bdnb/bdnb-raw-tertiaire_naf_counts.csv
 .mcp.json
+
+# Claude Code local settings (may contain tokens)
+.claude/

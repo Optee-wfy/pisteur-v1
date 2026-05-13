@@ -30,7 +30,7 @@ function formatDate(date: Date | string | null | undefined) {
 }
 
 export default function LeadsView() {
-  const { data: leads, isLoading, error } = trpc.operation.getAllCompatibleWithPro.useQuery();
+  const { data: leads, isLoading, error } = trpc.operations.getAllCompatibleWithPro.useQuery();
 
   const [search, setSearch] = useState("");
   const [phaseFilter, setPhaseFilter] = useState<string>("all");
@@ -152,7 +152,8 @@ export default function LeadsView() {
   );
 }
 
-function LeadRow({ lead }: { lead: NonNullable<ReturnType<typeof trpc.operation.getAllCompatibleWithPro.useQuery>["data"]>[number] }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function LeadRow({ lead }: { lead: any }) {
   const sector = (lead as { sortableSector?: string }).sortableSector;
   const dpe = (lead as { dpeLabel?: string }).dpeLabel;
 

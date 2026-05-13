@@ -24,9 +24,7 @@
       "@optee/bdnb-server": [
         "libs/server/third-party/bdnb-server/src/index.ts"
       ],
-      "@optee/blog": ["libs/client/blog/src/index.ts"],
       "@optee/client-server": ["libs/server/client-server/src/index.ts"],
-      "@optee/config/*": ["libs/client/config/src/lib/*"],
       "@optee/constants": ["libs/shared/constants/src/index.ts"],
       "@optee/constants/*": ["libs/shared/constants/src/lib/*"],
       "@optee/env": ["libs/shared/environments/index.ts"],
@@ -43,7 +41,6 @@
         "libs/server/contact-pro-server/src/index.ts"
       ],
       "@optee/contact-server": ["libs/server/contact-server/src/index.ts"],
-      "@optee/dialog": ["libs/client/dialog/src/index.ts"],
       "@optee/enum-server": ["libs/server/enum-server/src/index.ts"],
       "@optee/file-server": ["libs/server/file-server/src/index.ts"],
       "@optee/google-places-server": [
@@ -64,7 +61,6 @@
       "@optee/stripe-server": [
         "libs/server/stripe-server/src/index.ts"
       ],
-      "@optee/icons": ["libs/client/icons/src/index.ts"],
       "@optee/bdd-server": [
         "libs/server/bdd-server/src/index.ts"
       ],
@@ -115,7 +111,6 @@
       "@optee/supabase-server": ["libs/server/supabase-server/src/index.ts"],
       "@optee/trpc-client": ["libs/client/trpc/src/index.ts"],
       "@optee/trpc-server": ["libs/server/trpc-server/src/index.ts"],
-      "@optee/ui/*": ["libs/client/ui/src/lib/*"],
       "@optee/user-server": ["libs/server/user-server/src/index.ts"],
       "@optee/utils": ["libs/shared/utils/src/index.ts"],
       "@optee/yousign-server": [

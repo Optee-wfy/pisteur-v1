@@ -327,12 +327,7 @@ export const contactsRouter = router({
 
   updateLastSignInAt: privateProcedure.mutation(async ({ ctx }) => {
     const contact = await ContactRepository.getByUser(ctx.user.id);
-    if (!contact) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: `Erreur lors de la récupération du contact. ${contactSupport}`,
-      });
-    }
+    if (!contact) return;
     await ContactRepository.update(contact.uuid, {
       lastSignInAt: new Date(),
     });

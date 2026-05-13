@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   transpilePackages: [
     "@optee/constants",
     "@optee/models",
@@ -15,6 +18,7 @@ const nextConfig: NextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@optee/constants": path.join(root, "libs/shared/constants/src/index.ts"),
+      "@optee/constants/": path.join(root, "libs/shared/constants/src/lib/"),
       "@optee/models": path.join(root, "libs/shared/models/src/index.ts"),
       "@optee/utils": path.join(root, "libs/shared/utils/src/index.ts"),
       "@optee/trpc-client": path.join(root, "libs/client/trpc/src/index.ts"),

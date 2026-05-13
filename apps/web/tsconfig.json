@@ -17,7 +17,13 @@
     "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@optee/constants": ["../../libs/shared/constants/src/index.ts"],
+      "@optee/constants/*": ["../../libs/shared/constants/src/lib/*"],
+      "@optee/models": ["../../libs/shared/models/src/index.ts"],
+      "@optee/utils": ["../../libs/shared/utils/src/index.ts"],
+      "@optee/trpc-client": ["../../libs/client/trpc/src/index.ts"],
+      "@optee/trpc-server": ["../../libs/server/trpc-server/src/index.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
